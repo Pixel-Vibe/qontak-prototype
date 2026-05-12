@@ -1,0 +1,68 @@
+diff --git a/dist/module.mjs b/dist/module.mjs
+index 7eb8382aa962811f84b7b1d4491515c0d75eb23a..2dc00c5858611a8d02fb0189d11eda707867d56c 100644
+--- a/dist/module.mjs
++++ b/dist/module.mjs
+@@ -1,8 +1,11 @@
+-import { defineNuxtModule, createResolver, addComponent, addImports, addPluginTemplate } from '@nuxt/kit';
++import { defineNuxtModule, createResolver, addComponent, addImports, addTemplate, addPluginTemplate } from '@nuxt/kit';
++import { readFileSync } from 'node:fs';
+ import updateNotifier from 'update-notifier';
+ 
++console.log('kuda')
++
+ const name = "@mekari/pixel3-nuxt";
+-const version = "0.1.1-dev.0";
++const version = "0.1.1";
+ const description = "Pixel module for Nuxt 3";
+ const author = "Dimas Raka Septiawan <dimas.raka@mekari.com>";
+ const license = "MIT";
+@@ -12,7 +15,8 @@ const exports = {
+ 		types: "./dist/types.d.ts",
+ 		"import": "./dist/module.mjs",
+ 		require: "./dist/module.cjs"
+-	}
++	},
++	"./module.json": "./dist/module.json"
+ };
+ const main = "./dist/module.cjs";
+ const types = "./dist/types.d.ts";
+@@ -30,6 +34,8 @@ const dependencies = {
+ 	"update-notifier": "6.0.2"
+ };
+ const peerDependencies = {
++	"@mekari/pixel3": "*",
++	"@mekari/pixel3-postcss": "*",
+ 	nuxt: "^3.0.0 || ^4.0.0"
+ };
+ const devDependencies = {
+@@ -223,18 +229,23 @@ const module = defineNuxtModule({
+       });
+     }
+     if (options.css !== false) {
+-      nuxt.options.css.push(resolve("./runtime/pixel.css"));
++      const pixelCssContent = readFileSync(resolve("./runtime/pixel.css"), "utf-8");
++      const { dst } = addTemplate({
++        filename: "pixel.css",
++        write: true,
++        getContents: () => pixelCssContent
++      });
++      nuxt.options.css.push(dst);
+       nuxt.options.css.push("@mekari/pixel3/scrollbar.css");
+     }
+-    if (isNotEmptyObject(options.postcss)) {
+-      nuxt.options.postcss.plugins = {
+-        "@mekari/pixel3-postcss": options.postcss
+-      };
+-    }
++    nuxt.options.postcss.plugins = {
++      ...nuxt.options.postcss.plugins,
++      "@mekari/pixel3-postcss": isNotEmptyObject(options.postcss) ? options.postcss : {}
++    };
+     if (options.plugin !== false) {
+       const pluginConfig = options.plugin && typeof options.plugin === "object" ? options.plugin : {};
+       addPluginTemplate({
+-        filename: "pixel-plugin.mjs",
++        filename: "pixel.mjs",
+         mode: "client",
+         getContents: () => `
+ import { defineNuxtPlugin } from '#app'
