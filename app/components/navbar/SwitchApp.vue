@@ -7,20 +7,24 @@
     @click="isOpen = true"
   />
 
-  <MpDrawer :isOpen="isOpen" size="sm" style="z-index: 99999" @close="isOpen = false">
+  <MpDrawer id="drawer-switch-app" :isOpen="isOpen" size="sm" placement="right" is-close-on-overlay-click style="z-index: 99999" @close="isOpen = false">
     <MpDrawerContent>
-      <MpDrawerBody
-        :class="
-          css({
-            maxHeight: 'calc(100vh)',
-            overflow: 'hidden auto',
-            padding: 0,
-            marginTop: ['4', '20']
-          })
-        "
-      >
-        <MpDrawerCloseButton />
-        <slot />
+      <MpDrawerBody :class="css({ padding: '0', overflow: 'hidden auto' })">
+
+        <MpFlex justifyContent="flex-end" px="6" :class="css({ py: '4' })">
+          <MpButton
+            aria-label="close drawer"
+            left-icon="close"
+            variant="ghost"
+            size="sm"
+            @click="isOpen = false"
+          />
+        </MpFlex>
+
+        <MpFlex direction="column" gap="6" px="6" pb="6">
+          <slot />
+        </MpFlex>
+
       </MpDrawerBody>
     </MpDrawerContent>
 
@@ -34,9 +38,9 @@ import {
   MpButton,
   MpDrawer,
   MpDrawerBody,
-  MpDrawerCloseButton,
   MpDrawerContent,
   MpDrawerOverlay,
+  MpFlex,
   css
 } from "@mekari/pixel3";
 

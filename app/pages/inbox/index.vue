@@ -94,12 +94,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 import { css, MpButton, MpFlex, MpImage, MpSelect, MpText } from "@mekari/pixel3";
 import { CHAT_LIST_DATA } from "~/data/chat";
 import ChatList from "~/components/inbox/ChatList.vue";
 
-const title = ref("All inboxes");
+const TITLE_MAP: Record<string, string> = {
+  // inbox filter
+  "all_chats":         "All chats",
+  "my_chats":          "My chats",
+  "unassigned":        "Unassigned",
+  "assigned":          "Assigned",
+  "resolved":          "Resolved",
+  // custom views
+  "customer-support":  "Customer support",
+  "sales":             "Sales"
+};
+
+const route = useRoute();
+
+const title = computed(() => {
+  const status = route.query.status as string | undefined;
+  const view   = route.query.view   as string | undefined;
+  if (view)   return TITLE_MAP[view]   ?? view;
+  if (status) return TITLE_MAP[status] ?? status;
+  return "All chats";
+});
+
 const sortOrder = ref("newest");
 const activeChatId = ref("");
 </script>

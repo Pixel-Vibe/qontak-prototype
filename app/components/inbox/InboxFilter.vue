@@ -108,18 +108,13 @@
 
   <!-- Custom view items -->
   <SidebarChildItem
-    :is-active="activeCustomView === '1'"
-    counter="12"
-    @click="activeCustomView = '1'"
+    v-for="item in CUSTOM_VIEW_ITEMS"
+    :key="item.id"
+    :is-active="isItemActive(item)"
+    :counter="item.count ? String(item.count) : undefined"
+    @click="navigateToItem(item)"
   >
-    🎧 Customer support
-  </SidebarChildItem>
-  <SidebarChildItem
-    :is-active="activeCustomView === '2'"
-    counter="2"
-    @click="activeCustomView = '2'"
-  >
-    💰 Sales
+    {{ item.label }}
   </SidebarChildItem>
 
   <!-- Create Custom View drawer -->
@@ -172,10 +167,14 @@ const INBOX_FILTER_ITEMS: FilterItem[] = [
   { id: "resolved", label: "Resolved", route: "/inbox", query: { status: "resolved" } }
 ];
 
+const CUSTOM_VIEW_ITEMS: FilterItem[] = [
+  { id: "customer-support", label: "🎧 Customer support", route: "/inbox", query: { view: "customer-support" }, count: 12 },
+  { id: "sales", label: "💰 Sales", route: "/inbox", query: { view: "sales" }, count: 2 }
+];
+
 const route = useRoute();
 const router = useRouter();
 const isOpenCreateCustomView = ref(false);
-const activeCustomView = ref("");
 
 function isItemActive(item: FilterItem): boolean {
   const hasRouteQuery = Object.keys(route.query).length > 0;

@@ -2,18 +2,33 @@
   <div>
     <!-- Parent view -->
     <template v-if="showToggleContent === 'parent'">
-      <div :class="profileRootClass">
-        <div :class="profileContentClass">
-          <MpAvatar
-            :class="css({ marginBottom: '2' })"
-            :name="accountInformation.fullName"
-            :src="accountInformation.userPhoto"
-            size="lg"
-          />
-          <MpText weight="semiBold">{{ accountInformation.fullName }}</MpText>
-          <MpText color="text.secondary">{{ accountInformation.companyName }}</MpText>
-        </div>
-      </div>
+      <MpFlex
+        direction="column"
+        alignItems="center"
+        bg="background.neutral.subtle"
+        borderBottomWidth="1"
+        borderColor="border.default"
+        px="3"
+        py="4"
+      >
+        <MpAvatar
+          :name="accountInformation.fullName"
+          :src="accountInformation.userPhoto"
+          size="lg"
+          variant-color="sky"
+          :class="css({ mb: '2' })"
+        />
+        <MpText weight="semiBold">
+          {{ accountInformation.fullName }}
+        </MpText>
+        <MpText color="text.secondary">
+          {{ accountInformation.companyName }}
+        </MpText>
+        <MpFlex gap="2" mt="2">
+          <MpBadge for="tableStatus" type="information">Admin</MpBadge>
+          <MpBadge for="tableStatus" type="information">Full</MpBadge>
+        </MpFlex>
+      </MpFlex>
 
       <MpPopoverList>
         <MpPopoverListItem>
@@ -33,7 +48,7 @@
         </MpPopoverListItem>
       </MpPopoverList>
 
-      <MpDivider :class="css({ marginY: '0' })" />
+      <MpDivider />
 
       <MpPopoverList>
         <MpPopoverListItem is-arrow @click="onToggleContent('switchAccount')">
@@ -42,20 +57,30 @@
         <MpPopoverListItem is-arrow @click="onToggleContent('switchThemes')">
           Themes
         </MpPopoverListItem>
-        <MpPopoverListItem>Sign out</MpPopoverListItem>
+        <MpPopoverListItem @click="logout">Sign out</MpPopoverListItem>
       </MpPopoverList>
 
-      <div :class="footerRootClass">
-        <MpText :class="footerFontClass">Privacy</MpText>
-        <MpText :class="footerFontClass">Terms of Use</MpText>
-        <MpText :class="footerFontClass">About Mekari Account</MpText>
-        <MpText :class="footerFontClass">Mekari © 2022</MpText>
-      </div>
+      <MpFlex direction="column" gap="1" px="3" py="4">
+        <MpFlex gap="3" width="full">
+          <MpText size="overline" color="text.secondary">Privacy</MpText>
+          <MpText size="overline" color="text.secondary">Terms of Use</MpText>
+          <MpText size="overline" color="text.secondary">About Mekari Account</MpText>
+        </MpFlex>
+        <MpText size="overline" color="text.secondary">Mekari © 2026</MpText>
+      </MpFlex>
     </template>
 
     <!-- Company list -->
     <template v-if="showToggleContent === 'companyList'">
-      <div :class="popoverHeaderStyle">
+      <MpFlex
+        gap="2"
+        alignItems="center"
+        py="2"
+        px="3"
+        bg="background.neutral.subtle"
+        borderBottomWidth="1"
+        borderColor="border.default"
+      >
         <MpButton
           aria-label="back"
           left-icon="arrows-left"
@@ -64,7 +89,7 @@
           @click="onToggleContent('parent')"
         />
         <MpText weight="semiBold">Daftar perusahaan</MpText>
-      </div>
+      </MpFlex>
 
       <MpPopoverList>
         <MpPopoverListItem>
@@ -116,7 +141,15 @@
 
     <!-- Change language -->
     <template v-if="showToggleContent === 'changeLanguage'">
-      <div :class="popoverHeaderStyle">
+      <MpFlex
+        gap="2"
+        alignItems="center"
+        py="2"
+        px="3"
+        bg="background.neutral.subtle"
+        borderBottomWidth="1"
+        borderColor="border.default"
+      >
         <MpButton
           aria-label="back"
           left-icon="arrows-left"
@@ -125,7 +158,7 @@
           @click="onToggleContent('parent')"
         />
         <MpText weight="semiBold">Change language</MpText>
-      </div>
+      </MpFlex>
 
       <MpPopoverList>
         <MpPopoverListItem>
@@ -140,7 +173,15 @@
 
     <!-- Switch account -->
     <template v-if="showToggleContent === 'switchAccount'">
-      <div :class="popoverHeaderStyle">
+      <MpFlex
+        gap="2"
+        alignItems="center"
+        py="2"
+        px="3"
+        bg="background.neutral.subtle"
+        borderBottomWidth="1"
+        borderColor="border.default"
+      >
         <MpButton
           aria-label="back"
           left-icon="arrows-left"
@@ -149,7 +190,7 @@
           @click="onToggleContent('parent')"
         />
         <MpText weight="semiBold">Switch account</MpText>
-      </div>
+      </MpFlex>
 
       <MpPopoverList>
         <MpPopoverListItem>
@@ -179,7 +220,15 @@
 
     <!-- Switch themes -->
     <template v-if="showToggleContent === 'switchThemes'">
-      <div :class="popoverHeaderStyle">
+      <MpFlex
+        gap="2"
+        alignItems="center"
+        py="2"
+        px="3"
+        bg="background.neutral.subtle"
+        borderBottomWidth="1"
+        borderColor="border.default"
+      >
         <MpButton
           aria-label="back"
           left-icon="arrows-left"
@@ -188,7 +237,7 @@
           @click="onToggleContent('parent')"
         />
         <MpText weight="semiBold">Themes</MpText>
-      </div>
+      </MpFlex>
 
       <MpPopoverList>
         <MpPopoverListItem
@@ -211,10 +260,7 @@
           :is-active="currentTheme === 'dark'"
           @click="[setTheme('dark'), onClosePopover?.()]"
         >
-          <MpFlex align="center" gap="2">
-            Dark
-            <MpBadge type="critical" size="sm">BETA</MpBadge>
-          </MpFlex>
+          <MpText>Dark</MpText>
           <MpIcon v-if="currentTheme === 'dark'" name="check" size="sm" />
         </MpPopoverListItem>
       </MpPopoverList>
@@ -237,7 +283,10 @@ import {
   css
 } from "@mekari/pixel3";
 import { usePixelLayout } from "~/composables/usePixelLayout";
+import { useAuth } from "~/composables/useAuth";
 import { usePixelThemeSwitcher } from "~/composables/usePixelThemeSwitcher";
+
+type ContentType = "parent" | "companyList" | "changeLanguage" | "switchAccount" | "switchThemes";
 
 defineProps({
   onClosePopover: {
@@ -247,48 +296,8 @@ defineProps({
 
 const { accountInformation } = usePixelLayout();
 const { setTheme, currentTheme } = usePixelThemeSwitcher();
+const { logout } = useAuth();
 
-const popoverHeaderStyle = css({
-  display: "flex",
-  gap: 2,
-  alignItems: "center",
-  py: 2,
-  px: 3,
-  roundedTop: "md",
-  backgroundColor: "background.neutral.subtle",
-  borderBottomWidth: "1px",
-  borderColor: "border.default"
-});
-
-const profileRootClass = css({
-  backgroundColor: "background.neutral",
-  borderBottomWidth: "1px",
-  borderColor: "border.default",
-  borderTopRadius: "md",
-  py: 4
-});
-
-const profileContentClass = css({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "column"
-});
-
-const footerRootClass = css({
-  display: "flex",
-  gap: "3",
-  flexWrap: "wrap",
-  px: "3",
-  py: "4"
-});
-
-const footerFontClass = css({
-  fontSize: "xs",
-  color: "text.secondary"
-});
-
-type ContentType = "parent" | "companyList" | "changeLanguage" | "switchAccount" | "switchThemes";
 const showToggleContent = ref<ContentType>("parent");
 
 function onToggleContent(content: ContentType) {

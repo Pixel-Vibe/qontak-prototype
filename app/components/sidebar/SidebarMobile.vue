@@ -142,7 +142,7 @@
               <MpText as="a" href="#" color="text.secondary" :class="css({ py: '2' })"
                 >About Mekari Account</MpText
               >
-              <MpText color="text.secondary" :class="css({ py: '2' })">Mekari © 2022</MpText>
+              <MpText color="text.secondary" :class="css({ py: '2' })">Mekari © 2026</MpText>
             </MpFlex>
           </div>
         </MpDrawerBody>

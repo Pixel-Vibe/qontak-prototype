@@ -52,59 +52,76 @@
     </div>
 
     <div data-slot="rightContent" :class="css({ display: 'flex', gap: '2', alignItems: 'center' })">
-      <MpButton
-        v-tooltip="'Help center'"
-        aria-label="help button"
-        left-icon="help"
-        variant="ghost"
-      />
-
       <Notification>
         <NotificationContent />
       </Notification>
 
       <SwitchApp>
-        <div :class="css({ paddingBottom: '20', paddingX: '6' })">
-          <MpText :class="css({ marginBottom: '2' })"
-            >Hi Christin, your apps are listed here.</MpText
-          >
+        <div>
+          <MpText :class="css({ mb: '2', color: 'text.default' })">
+            Hi {{ accountInformation.fullName }}, your apps are listed here.
+          </MpText>
           <SwitchAppItem
+            title="Qontak Omnichannel"
+            description="No. 1 Omnichannel apps in Indonesia"
+            icon="qontak-brand"
+          />
+        </div>
+
+        <MpDivider :class="css({ marginY: '0' })" />
+
+        <div>
+          <MpText :class="css({ mb: '2', color: 'text.default' })">
+            Other product by Mekari that might suit your business needs.
+          </MpText>
+          <SwitchAppItem
+            newtab
             title="Mekari Talenta"
             description="Advanced payroll automation & HR solution"
             icon="talenta-brand"
           />
           <SwitchAppItem
+            newtab
             title="Mekari Jurnal"
             description="Integrated online accounting software"
             icon="jurnal-brand"
           />
-          <MpDivider :class="css({ marginTop: '2', marginBottom: '2' })" />
-          <MpText :class="css({ marginBottom: '2' })"
-            >Other apps by Mekari that might suit your business needs.</MpText
-          >
           <SwitchAppItem
+            newtab
             title="Mekari Klikpajak"
             description="Simple tax management platform"
             icon="klikpajak-brand"
           />
           <SwitchAppItem
+            newtab
             title="Mekari Flex"
             description="Flexible employee benefits management"
             icon="flex-brand"
           />
           <SwitchAppItem
-            title="Mekari Sign"
-            description="Digital signature app"
+            newtab
+            title="Mekari eSign"
+            description="Digital signing solution"
             icon="sign-brand"
           />
-          <MpDivider :class="css({ marginTop: '2', marginBottom: '2' })" />
-          <MpText :class="css({ marginBottom: '2' })">More from Mekari.</MpText>
+        </div>
+
+        <MpDivider :class="css({ marginY: '0' })" />
+
+        <div>
+          <MpText :class="css({ mb: '2', color: 'text.default' })">More from Mekari</MpText>
           <SwitchAppItem
+            newtab
             title="Mekari University"
             description="Professional learning platform"
             icon="mekari-brand"
           />
-          <SwitchAppItem title="Mekari Hub" description="Launchpad" icon="mekari-brand" />
+          <SwitchAppItem
+            newtab
+            title="Mekari Account"
+            description="Your account"
+            icon="mekari-brand"
+          />
         </div>
       </SwitchApp>
 
@@ -118,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { css, MpButton, MpDivider, MpFlex, MpText } from "@mekari/pixel3";
+import { css, MpDivider, MpFlex, MpText } from "@mekari/pixel3";
 import { usePixelLayout } from "~/composables/usePixelLayout";
 import { NAVBAR_HEIGHT } from "~/data/constants";
 import SelectApp from "~/components/navbar/SelectApp.vue";
@@ -130,7 +147,7 @@ import SwitchAccount from "~/components/navbar/SwitchAccount.vue";
 import SwitchAccountContent from "~/components/navbar/SwitchAccountContent.vue";
 import SidebarMobile from "~/components/sidebar/SidebarMobile.vue";
 
-const { navbarNode, setAccountInformation } = usePixelLayout();
+const { navbarNode, setAccountInformation, accountInformation } = usePixelLayout();
 
 setAccountInformation({
   companyId: "12345678",

@@ -1,75 +1,61 @@
-# Qontak Protoype
+# Qontak Prototype
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+UI prototype for Mekari Qontak built with Nuxt 4 and Pixel 3 design system.
 
-## Setup
+## Stack
 
-Make sure to install dependencies:
+- **Framework**: Nuxt 4, Vue 3, TypeScript
+- **Design system**: `@mekari/pixel3` (token mode 2.4)
+- **Deployment**: Cloudflare Pages
+
+## Prerequisites
+
+- Node.js ≥ 18
+- npm, pnpm, yarn, or bun
+
+## Getting Started
+
+### 1. Clone
 
 ```bash
-# npm
+git clone https://github.com/Pixel-Vibe/qontak-prototype.git
+cd qontak-prototype
+```
+
+### 2. Install dependencies
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+### 3. Run dev server
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Opens at `http://localhost:3000`.
 
-Build the application for production:
+### Login credentials
 
-```bash
-# npm
-npm run build
+This prototype uses dummy auth (no backend).
 
-# pnpm
-pnpm build
+| Field    | Value                  |
+| -------- | ---------------------- |
+| Email    | `prototype@qontak.com` |
+| Password | `qontakuhuy`           |
 
-# yarn
-yarn build
+## Scripts
 
-# bun
-bun run build
-```
+| Command            | Description                      |
+| ------------------ | -------------------------------- |
+| `npm run dev`      | Start dev server                 |
+| `npm run build`    | Build for production             |
+| `npm run preview`  | Preview production build locally |
+| `npm run lint`     | Lint with ESLint                 |
+| `npm run lint:fix` | Auto-fix lint issues             |
+| `npm run format`   | Format with Prettier             |
 
-Locally preview production build:
+## Deployment
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Deployed via Cloudflare Pages (git-connected). Push to `main` triggers auto-deploy.
