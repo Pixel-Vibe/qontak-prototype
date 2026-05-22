@@ -107,10 +107,18 @@
   </MpFlex>
 
   <!-- Custom view items -->
-  <SidebarChildItem :is-active="activeCustomView === '1'" counter="12" @click="activeCustomView = '1'">
+  <SidebarChildItem
+    :is-active="activeCustomView === '1'"
+    counter="12"
+    @click="activeCustomView = '1'"
+  >
     🎧 Customer support
   </SidebarChildItem>
-  <SidebarChildItem :is-active="activeCustomView === '2'" counter="2" @click="activeCustomView = '2'">
+  <SidebarChildItem
+    :is-active="activeCustomView === '2'"
+    counter="2"
+    @click="activeCustomView = '2'"
+  >
     💰 Sales
   </SidebarChildItem>
 
@@ -145,9 +153,21 @@ interface FilterItem {
 }
 
 const INBOX_FILTER_ITEMS: FilterItem[] = [
-  { id: "all-chats", label: "All chats", route: "/inbox", query: { status: "all_chats" }, count: "99+" },
+  {
+    id: "all-chats",
+    label: "All chats",
+    route: "/inbox",
+    query: { status: "all_chats" },
+    count: "99+"
+  },
   { id: "my-chats", label: "My chats", route: "/inbox", query: { status: "my_chats" }, count: 4 },
-  { id: "unassigned", label: "Unassigned", route: "/inbox", query: { status: "unassigned" }, count: 2 },
+  {
+    id: "unassigned",
+    label: "Unassigned",
+    route: "/inbox",
+    query: { status: "unassigned" },
+    count: 2
+  },
   { id: "assigned", label: "Assigned", route: "/inbox", query: { status: "assigned" }, count: 10 },
   { id: "resolved", label: "Resolved", route: "/inbox", query: { status: "resolved" } }
 ];
@@ -164,8 +184,7 @@ function isItemActive(item: FilterItem): boolean {
   }
   if (!item.query) return false;
   return (
-    route.path === item.route &&
-    Object.entries(item.query).every(([k, v]) => route.query[k] === v)
+    route.path === item.route && Object.entries(item.query).every(([k, v]) => route.query[k] === v)
   );
 }
 

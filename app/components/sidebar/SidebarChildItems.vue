@@ -13,36 +13,36 @@
 
   <!-- Items -->
   <template v-if="submenu">
-  <template v-for="item in submenu.items" :key="item.id">
-    <SidebarChildItemAccordion
-      v-if="item.children"
-      :is-active="isRouteActive(item.route)"
-      :default-is-open="isRouteActive(item.route)"
-    >
-      <template #header>{{ item.label }}</template>
-      <template #content>
-        <SidebarChildItem
-          v-for="child in item.children"
-          :key="child.id"
-          variant="accordionItem"
-          :is-active="isChildActive(child)"
-          :counter="child.count ? String(child.count) : undefined"
-          @click="openItem(child)"
-        >
-          {{ child.label }}
-        </SidebarChildItem>
-      </template>
-    </SidebarChildItemAccordion>
+    <template v-for="item in submenu.items" :key="item.id">
+      <SidebarChildItemAccordion
+        v-if="item.children"
+        :is-active="isRouteActive(item.route)"
+        :default-is-open="isRouteActive(item.route)"
+      >
+        <template #header>{{ item.label }}</template>
+        <template #content>
+          <SidebarChildItem
+            v-for="child in item.children"
+            :key="child.id"
+            variant="accordionItem"
+            :is-active="isChildActive(child)"
+            :counter="child.count ? String(child.count) : undefined"
+            @click="openItem(child)"
+          >
+            {{ child.label }}
+          </SidebarChildItem>
+        </template>
+      </SidebarChildItemAccordion>
 
-    <SidebarChildItem
-      v-else
-      :is-active="isChildActive(item)"
-      :counter="item.count ? String(item.count) : undefined"
-      @click="openItem(item)"
-    >
-      {{ item.label }}
-    </SidebarChildItem>
-  </template>
+      <SidebarChildItem
+        v-else
+        :is-active="isChildActive(item)"
+        :counter="item.count ? String(item.count) : undefined"
+        @click="openItem(item)"
+      >
+        {{ item.label }}
+      </SidebarChildItem>
+    </template>
   </template>
 </template>
 

@@ -4,20 +4,34 @@
     data-pixel-component="TheSidebar"
     data-slot="root"
     :class="rootClass"
-    :style="{ width: isSidebarCollapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_EXPANDED_WIDTH}px` }"
+    :style="{
+      width: isSidebarCollapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_EXPANDED_WIDTH}px`
+    }"
   >
-    <div data-slot="rootChild" :class="rootChildClass" :style="{ marginRight: `${SIDEBAR_COLLAPSED_WIDTH}px` }">
+    <div
+      data-slot="rootChild"
+      :class="rootChildClass"
+      :style="{ marginRight: `${SIDEBAR_COLLAPSED_WIDTH}px` }"
+    >
       <div
         data-slot="menu"
         :class="menuClass"
-        :style="{ width: isSidebarCollapsed && !isSidebarHovered ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_EXPANDED_WIDTH}px` }"
+        :style="{
+          width:
+            isSidebarCollapsed && !isSidebarHovered
+              ? `${SIDEBAR_COLLAPSED_WIDTH}px`
+              : `${SIDEBAR_EXPANDED_WIDTH}px`
+        }"
         @mouseover="handleSidebarHover(true)"
         @mouseleave="handleSidebarHover(false)"
       >
         <ul
           class="sidebar-content"
           :class="mainMenuClass"
-          :style="{ height: `calc(100vh - ${NAVBAR_HEIGHT}px)`, paddingBottom: `${SIDEBAR_BOTTOM_BAR_HEIGHT}px` }"
+          :style="{
+            height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+            paddingBottom: `${SIDEBAR_BOTTOM_BAR_HEIGHT}px`
+          }"
         >
           <template v-for="(group, groupIndex) in menuGroups" :key="groupIndex">
             <li v-if="groupIndex > 0" :key="`divider-${groupIndex}`">
