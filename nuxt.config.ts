@@ -8,10 +8,6 @@ export default defineNuxtConfig({
   // Register components by filename only — no folder-prefix (DefaultPageContent not TemplateDefaultPageContent)
   components: [{ path: "~/components", pathPrefix: false }],
 
-  nitro: {
-    preset: "cloudflare-pages"
-  },
-
   vite: {
     optimizeDeps: {
       include: ["@mekari/pixel3"]

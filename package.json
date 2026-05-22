@@ -4,10 +4,9 @@
   "private": true,
   "author": "Ahmad Zakiy <ahmad.zakiy@mekari.com>",
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt generate",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "npx serve dist",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
