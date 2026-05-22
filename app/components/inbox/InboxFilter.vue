@@ -168,7 +168,13 @@ const INBOX_FILTER_ITEMS: FilterItem[] = [
 ];
 
 const CUSTOM_VIEW_ITEMS: FilterItem[] = [
-  { id: "customer-support", label: "🎧 Customer support", route: "/inbox", query: { view: "customer-support" }, count: 12 },
+  {
+    id: "customer-support",
+    label: "🎧 Customer support",
+    route: "/inbox",
+    query: { view: "customer-support" },
+    count: 12
+  },
   { id: "sales", label: "💰 Sales", route: "/inbox", query: { view: "sales" }, count: 2 }
 ];
 

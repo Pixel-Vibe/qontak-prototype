@@ -7,10 +7,17 @@
     @click="isOpen = true"
   />
 
-  <MpDrawer id="drawer-switch-app" :isOpen="isOpen" size="sm" placement="right" is-close-on-overlay-click style="z-index: 99999" @close="isOpen = false">
+  <MpDrawer
+    id="drawer-switch-app"
+    :isOpen="isOpen"
+    size="sm"
+    placement="right"
+    is-close-on-overlay-click
+    style="z-index: 99999"
+    @close="isOpen = false"
+  >
     <MpDrawerContent>
       <MpDrawerBody :class="css({ padding: '0', overflow: 'hidden auto' })">
-
         <MpFlex justifyContent="flex-end" px="6" :class="css({ py: '4' })">
           <MpButton
             aria-label="close drawer"
@@ -24,7 +31,6 @@
         <MpFlex direction="column" gap="6" px="6" pb="6">
           <slot />
         </MpFlex>
-
       </MpDrawerBody>
     </MpDrawerContent>
 

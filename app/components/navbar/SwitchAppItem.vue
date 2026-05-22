@@ -19,21 +19,26 @@
   >
     <MpFlex gap="3" alignItems="center" :class="css({ flex: '1' })">
       <div
-        :class="css({
-          bg: 'background.stage',
-          borderWidth: '1px',
-          borderColor: 'border.default',
-          borderRadius: 'md',
-          padding: '2',
-          flexShrink: '0',
-          _groupHover: { backgroundColor: 'background.neutral' }
-        })"
+        :class="
+          css({
+            bg: 'background.stage',
+            borderWidth: '1px',
+            borderColor: 'border.default',
+            borderRadius: 'md',
+            padding: '2',
+            flexShrink: '0',
+            _groupHover: { backgroundColor: 'background.neutral' }
+          })
+        "
       >
         <MpIcon :name="icon" size="sm" />
       </div>
 
       <MpFlex direction="column" :class="css({ flex: '1', minWidth: '0' })">
-        <MpText weight="semiBold" :class="css({ fontSize: 'sm', lineHeight: '5', color: 'text.default' })">
+        <MpText
+          weight="semiBold"
+          :class="css({ fontSize: 'sm', lineHeight: '5', color: 'text.default' })"
+        >
           {{ title }}
         </MpText>
         <MpText size="label-small" color="text.secondary">
@@ -41,7 +46,12 @@
         </MpText>
       </MpFlex>
 
-      <MpIcon v-if="newtab" name="newtab" size="sm" :class="css({ color: 'icon.default', flexShrink: '0' })" />
+      <MpIcon
+        v-if="newtab"
+        name="newtab"
+        size="sm"
+        :class="css({ color: 'icon.default', flexShrink: '0' })"
+      />
     </MpFlex>
   </component>
 </template>

@@ -102,22 +102,22 @@ import ChatList from "~/components/inbox/ChatList.vue";
 
 const TITLE_MAP: Record<string, string> = {
   // inbox filter
-  "all_chats":         "All chats",
-  "my_chats":          "My chats",
-  "unassigned":        "Unassigned",
-  "assigned":          "Assigned",
-  "resolved":          "Resolved",
+  all_chats: "All chats",
+  my_chats: "My chats",
+  unassigned: "Unassigned",
+  assigned: "Assigned",
+  resolved: "Resolved",
   // custom views
-  "customer-support":  "Customer support",
-  "sales":             "Sales"
+  "customer-support": "Customer support",
+  sales: "Sales"
 };
 
 const route = useRoute();
 
 const title = computed(() => {
   const status = route.query.status as string | undefined;
-  const view   = route.query.view   as string | undefined;
-  if (view)   return TITLE_MAP[view]   ?? view;
+  const view = route.query.view as string | undefined;
+  if (view) return TITLE_MAP[view] ?? view;
   if (status) return TITLE_MAP[status] ?? status;
   return "All chats";
 });
