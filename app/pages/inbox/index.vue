@@ -27,7 +27,7 @@
         <!-- Panel header: title -->
         <MpFlex
           alignItems="center"
-          :height="`${PANEL_HEADER_HEIGHT}px`"
+          height="60px"
           px="4"
           borderBottomWidth="1"
           borderColor="border.default"
@@ -39,7 +39,7 @@
         <MpFlex
           gap="2"
           alignItems="center"
-          :height="`${PANEL_HEADER_HEIGHT}px`"
+          height="60px"
           px="4"
           borderBottomWidth="1"
           borderColor="border.default"
@@ -49,9 +49,11 @@
             <option value="oldest">Oldest</option>
             <option value="auto">Auto</option>
           </MpSelect>
-          <MpButton aria-label="mark done" left-icon="done" variant="ghost" />
-          <MpButton aria-label="read all" left-icon="empty" variant="ghost" />
-          <MpButton aria-label="filter" left-icon="filter" variant="ghost" />
+          <MpFlex gap="1" alignItems="center" marginLeft="auto">
+            <MpButton aria-label="mark done" left-icon="done" variant="ghost" />
+            <MpButton aria-label="read all" left-icon="empty" variant="ghost" />
+            <MpButton aria-label="filter" left-icon="filter" variant="ghost" />
+          </MpFlex>
         </MpFlex>
 
         <!-- Chat list -->
@@ -96,7 +98,6 @@ import { ref } from "vue";
 import { css, MpButton, MpFlex, MpImage, MpSelect, MpText } from "@mekari/pixel3";
 import { CHAT_LIST_DATA } from "~/data/chat";
 import ChatList from "~/components/inbox/ChatList.vue";
-import { PANEL_HEADER_HEIGHT } from "~/data/constants";
 
 const title = ref("All inboxes");
 const sortOrder = ref("newest");

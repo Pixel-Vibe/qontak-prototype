@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@mekari/pixel3-nuxt", "@nuxt/eslint"],
 
+  // Register components by filename only — no folder-prefix (DefaultPageContent not TemplateDefaultPageContent)
+  components: [{ path: "~/components", pathPrefix: false }],
+
+  nitro: {
+    preset: "cloudflare-pages"
+  },
+
   vite: {
     optimizeDeps: {
       include: ["@mekari/pixel3"]

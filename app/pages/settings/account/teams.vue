@@ -1,3 +1,3 @@
 <template>
-  <SimplePageContent />
+  <DefaultPageContent />
 </template>

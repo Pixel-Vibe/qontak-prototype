@@ -13,7 +13,7 @@ function getFirstChildRoute(item: AppMenuItem | AppMenuChild) {
     return getFirstChildRoute(item.submenu.items[0]);
   }
 
-  if (item.children?.[0]) return getFirstChildRoute(item.children[0]);
+  if ("children" in item && item.children?.[0]) return getFirstChildRoute(item.children[0]);
 
   return item.route;
 }

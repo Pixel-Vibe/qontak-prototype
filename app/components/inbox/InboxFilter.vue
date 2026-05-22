@@ -180,7 +180,7 @@ const activeCustomView = ref("");
 function isItemActive(item: FilterItem): boolean {
   const hasRouteQuery = Object.keys(route.query).length > 0;
   if (!hasRouteQuery && route.path === item.route) {
-    return item.id === INBOX_FILTER_ITEMS[0].id;
+    return item.id === INBOX_FILTER_ITEMS[0]?.id;
   }
   if (!item.query) return false;
   return (
