@@ -1,0 +1,140 @@
+import { ref, readonly, onBeforeMount, onMounted } from "vue";
+import { NAVBAR_HEIGHT, SIDEBAR_EXPANDED_WIDTH } from "~/data/constants";
+
+interface AccountInformation {
+  userPhoto: string;
+  fullName: string;
+  companyName: string;
+  companyId: string;
+}
+
+// Module-level shared state (singleton — works with ssr: false)
+const accountInformation = ref<AccountInformation>({
+  userPhoto: "https://i.pravatar.cc/300",
+  fullName: "Rizal Chandra",
+  companyId: "12345678",
+  companyName: "PT Mid Solusi Nusantara"
+});
+
+const isSidebarCollapsed = ref(false);
+const isSidebarHovered = ref(false);
+const isSidebarLoading = ref(false);
+const sidebarNode = ref<HTMLElement | null>(null);
+
+const isSidebarChildCollapsed = ref(false);
+const sidebarChildNode = ref<HTMLElement | null>(null);
+
+const isNavbarLoading = ref(false);
+const navbarNode = ref<HTMLElement | null>(null);
+
+const pixelContentAttrs = {
+  style: {
+    paddingTop: "var(--pixel-navbar-height)",
+    minHeight: "100svh",
+    width: "100%"
+  }
+};
+
+function setAccountInformation(payload: AccountInformation) {
+  accountInformation.value = payload;
+}
+
+function handleSidebarHover(value: boolean) {
+  if (!isSidebarCollapsed.value) return;
+  isSidebarHovered.value = value;
+}
+
+const useSidebar = {
+  calculateCssVar: () => {
+    if (import.meta.client) {
+      document.documentElement.style.setProperty(
+        "--pixel-sidebar-width",
+        `${(sidebarNode.value as HTMLElement | null)?.clientWidth || 0}px`
+      );
+    }
+  },
+  setCollapse: (value: boolean) => {
+    isSidebarCollapsed.value = value;
+  },
+  toggle: () => {
+    isSidebarCollapsed.value = !isSidebarCollapsed.value;
+    if (import.meta.client) {
+      document.documentElement.style.setProperty(
+        "--pixel-sidebar-width",
+        `${isSidebarCollapsed.value ? 60 : SIDEBAR_EXPANDED_WIDTH}px`
+      );
+    }
+  },
+  setLoading: (value: boolean) => {
+    isSidebarLoading.value = value;
+  }
+};
+
+const useSidebarChild = {
+  toggle: () => {
+    isSidebarChildCollapsed.value = !isSidebarChildCollapsed.value;
+  }
+};
+
+const useNavbar = {
+  setLoading: (value: boolean) => {
+    isNavbarLoading.value = value;
+  },
+  calculateCssVar: () => {
+    if (import.meta.client) {
+      document.documentElement.style.setProperty(
+        "--pixel-navbar-height",
+        `${(navbarNode.value as HTMLElement | null)?.clientHeight || NAVBAR_HEIGHT}px`
+      );
+    }
+  }
+};
+
+function handleKeydown(e: KeyboardEvent) {
+  const body = document.getElementsByTagName("body")[0];
+  if (e.shiftKey && e.keyCode === 88 && e.target === body) useSidebar.toggle();
+  if (e.shiftKey && e.keyCode === 67 && e.target === body) useSidebarChild.toggle();
+}
+
+let listenersAttached = false;
+
+export function usePixelLayout() {
+  onBeforeMount(() => {
+    if (!listenersAttached && import.meta.client) {
+      listenersAttached = true;
+      window.addEventListener("keydown", handleKeydown);
+    }
+  });
+
+  onMounted(() => {
+    useSidebar.calculateCssVar();
+    useNavbar.calculateCssVar();
+  });
+
+  return {
+    /** Account */
+    accountInformation: readonly(accountInformation),
+    setAccountInformation,
+
+    /** Sidebar */
+    useSidebar,
+    sidebarNode,
+    isSidebarLoading,
+    isSidebarHovered,
+    isSidebarCollapsed,
+    handleSidebarHover,
+
+    /** Sidebar child */
+    isSidebarChildCollapsed,
+    sidebarChildNode,
+    useSidebarChild,
+
+    /** Navbar */
+    navbarNode,
+    isNavbarLoading,
+    useNavbar,
+
+    /** Content */
+    pixelContentAttrs
+  };
+}

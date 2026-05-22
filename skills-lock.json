@@ -1,11 +1,23 @@
 {
   "version": 1,
   "skills": {
-    "pixel": {
-      "source": "ahmadzakiy/skills",
+    "implement-to-pixel": {
+      "source": "pixel-vibe/skills",
       "sourceType": "github",
-      "skillPath": "skills/pixel/SKILL.md",
-      "computedHash": "60f35a25a169fa4fc380f04530324a3db9b6ba7dba0e98818c6cc50180f97959"
+      "skillPath": "implement-to-pixel/SKILL.md",
+      "computedHash": "0ae006d87a0ac3e6a2d659ebac3f8249ca54a288360188c87623a3ae975df802"
+    },
+    "mekari-taste": {
+      "source": "pixel-vibe/skills",
+      "sourceType": "github",
+      "skillPath": "mekari-taste/SKILL.md",
+      "computedHash": "238237cfd924d8c7101e40cde417142d41efe1afe4e441ad164dd469ae80944e"
+    },
+    "pixel": {
+      "source": "pixel-vibe/skills",
+      "sourceType": "github",
+      "skillPath": "pixel/SKILL.md",
+      "computedHash": "f0a73298052dbf6c505c4e77f30216214121bee7f6099690ba455b34faf3510a"
     }
   }
 }

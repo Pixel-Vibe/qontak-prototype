@@ -1,0 +1,5 @@
+export const NAVBAR_HEIGHT = 56;
+export const SIDEBAR_COLLAPSED_WIDTH = 52;
+export const SIDEBAR_EXPANDED_WIDTH = 216;
+export const SIDEBAR_BOTTOM_BAR_HEIGHT = 60;
+export const PANEL_HEADER_HEIGHT = 60;
