@@ -23,6 +23,10 @@
     "vue": "^3.5.33",
     "vue-router": "^5.0.6"
   },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
     "eslint": "^9.39.4",
