@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   // Register components by filename only — no folder-prefix (DefaultPageContent not TemplateDefaultPageContent)
   components: [{ path: "~/components", pathPrefix: false }],
 
+  // TODO: Remove this once @mekari/pixel3-nuxt CSS broken in nuxt generate fixed
+  css: ["~/assets/css/pixel.css"],
+
   vite: {
     optimizeDeps: {
       include: ["@mekari/pixel3"]
