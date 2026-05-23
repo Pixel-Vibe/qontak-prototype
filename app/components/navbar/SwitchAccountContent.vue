@@ -120,12 +120,7 @@
             <MpText color="text.secondary">Company id : 377752</MpText>
           </div>
         </MpPopoverListItem>
-        <MpFlex
-          justifyContent="center"
-          pt="2"
-          borderTopWidth="1"
-          borderColor="border.default"
-        >
+        <MpFlex justifyContent="center" pt="2" borderTopWidth="1" borderColor="border.default">
           <MpTextlink variant="primary">+ Create new company</MpTextlink>
         </MpFlex>
       </MpPopoverList>
@@ -192,12 +187,7 @@
         <MpPopoverListItem><MpText>sastra.nababan@mekari.com</MpText></MpPopoverListItem>
         <MpPopoverListItem><MpText>dirga.prakhesa@mekari.com</MpText></MpPopoverListItem>
         <MpPopoverListItem><MpText>ahmad.zakiy@mekari.com</MpText></MpPopoverListItem>
-        <MpFlex
-          justifyContent="center"
-          pt="2"
-          borderTopWidth="1"
-          borderColor="border.default"
-        >
+        <MpFlex justifyContent="center" pt="2" borderTopWidth="1" borderColor="border.default">
           <MpTextlink variant="primary">+ Add new account</MpTextlink>
         </MpFlex>
       </MpPopoverList>
