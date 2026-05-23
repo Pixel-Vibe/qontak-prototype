@@ -16,7 +16,7 @@
       padding="10"
       width="full"
       maxWidth="400px"
-      boxShadow="lg"
+      shadow="lg"
     >
       <!-- Logo -->
       <MpFlex justifyContent="center" :class="css({ mb: '6' })">
@@ -99,7 +99,6 @@
 import { ref } from "vue";
 import {
   css,
-  toast,
   MpButton,
   MpFlex,
   MpFormControl,
@@ -135,12 +134,6 @@ async function handleSubmit() {
     await navigateTo("/");
   } else {
     errorMessage.value = "Email or password is incorrect.";
-    toast.notify({
-      id: "login-error",
-      position: "top-right",
-      variant: "error",
-      title: "Email or password is incorrect."
-    });
   }
 
   isLoading.value = false;

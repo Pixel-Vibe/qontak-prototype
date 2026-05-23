@@ -3,9 +3,9 @@
     data-pixel-component="PixelContent"
     style="padding-top: var(--pixel-navbar-height); min-height: 100svh; width: 100%"
   >
-    <MpFlex justify="space-between" align-items="center" px="6" py="1.063rem">
+    <MpFlex justifyContent="space-between" alignItems="center" px="6" py="4">
       <MpText size="h1" weight="semiBold">{{ activePageTitle }}</MpText>
-      <MpButton>Action</MpButton>
+      <MpButton variant="primary">Action</MpButton>
     </MpFlex>
 
     <div

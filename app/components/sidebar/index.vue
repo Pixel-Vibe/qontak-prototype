@@ -198,6 +198,6 @@ const bottomActionClass = css({
   position: absolute;
 }
 .sidebar-content:hover::-webkit-scrollbar-thumb {
-  background: var(--colors-gray-400);
+  background: var(--colors-border-strong);
 }
 </style>

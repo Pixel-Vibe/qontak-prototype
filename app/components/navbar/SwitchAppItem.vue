@@ -11,13 +11,13 @@
         transition: 'all 200ms ease',
         _hover: {
           backgroundColor: 'background.neutral.subtle',
-          color: 'background.brand.selected',
+          color: 'text.brand',
           cursor: 'pointer'
         }
       })
     "
   >
-    <MpFlex gap="3" alignItems="center" :class="css({ flex: '1' })">
+    <MpFlex gap="3" alignItems="center" flex="1">
       <div
         :class="
           css({
@@ -34,11 +34,8 @@
         <MpIcon :name="icon" size="sm" />
       </div>
 
-      <MpFlex direction="column" :class="css({ flex: '1', minWidth: '0' })">
-        <MpText
-          weight="semiBold"
-          :class="css({ fontSize: 'sm', lineHeight: '5', color: 'text.default' })"
-        >
+      <MpFlex direction="column" flex="1" minWidth="0">
+        <MpText size="body-small" weight="semiBold" color="text.default">
           {{ title }}
         </MpText>
         <MpText size="label-small" color="text.secondary">

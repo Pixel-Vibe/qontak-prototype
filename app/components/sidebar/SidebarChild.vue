@@ -133,7 +133,7 @@
               right: '0',
               py: '3',
               px: '2',
-              width: '100%',
+              width: 'full',
               zIndex: 'sticky'
             })
           "
@@ -149,8 +149,8 @@
                     padding: '2',
                     outline: 'none',
                     _hover: {
-                      backgroundColor: 'blue.100',
-                      color: 'blue.400',
+                      backgroundColor: 'background.neutral.hovered',
+                      color: 'text.brand',
                       cursor: 'pointer'
                     }
                   })

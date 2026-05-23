@@ -18,7 +18,7 @@
   >
     <MpDrawerContent>
       <MpDrawerBody :class="css({ padding: '0', overflow: 'hidden auto' })">
-        <MpFlex justifyContent="flex-end" px="6" :class="css({ py: '4' })">
+        <MpFlex justifyContent="flex-end" px="6" py="4">
           <MpButton
             aria-label="close drawer"
             left-icon="close"

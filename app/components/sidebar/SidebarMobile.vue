@@ -42,7 +42,7 @@
             borderRadius="none"
             paddingX="4"
             paddingY="2.5"
-            backgroundColor="white"
+            backgroundColor="background.stage"
           >
             <MpAvatar
               :name="accountInformation.fullName"
@@ -59,7 +59,7 @@
           </MpFlex>
 
           <!-- Menus -->
-          <div :class="css({ paddingX: '2', paddingY: '4', backgroundColor: 'white' })">
+          <div :class="css({ paddingX: '2', paddingY: '4', backgroundColor: 'background.stage' })">
             <ul :class="css({ display: 'flex', flexDirection: 'column' })">
               <template v-for="menu in menuItems" :key="menu.id">
                 <li
