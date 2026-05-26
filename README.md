@@ -10,8 +10,8 @@ UI prototype for Mekari Qontak built with Nuxt 4 and Pixel 3 design system.
 
 ## Prerequisites
 
-- Node.js ≥ 18
-- npm, pnpm, yarn, or bun
+- Node.js v22+
+- pnpm v9+
 
 ## Getting Started
 
@@ -25,13 +25,13 @@ cd qontak-prototype
 ### 2. Install dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 3. Run dev server
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Opens at `http://localhost:3000`.
@@ -47,15 +47,19 @@ This prototype uses dummy auth (no backend).
 
 ## Scripts
 
-| Command            | Description                      |
-| ------------------ | -------------------------------- |
-| `npm run dev`      | Start dev server                 |
-| `npm run build`    | Build for production             |
-| `npm run preview`  | Preview production build locally |
-| `npm run lint`     | Lint with ESLint                 |
-| `npm run lint:fix` | Auto-fix lint issues             |
-| `npm run format`   | Format with Prettier             |
+| Command             | Description                      |
+| ------------------- | -------------------------------- |
+| `pnpm dev`          | Start dev server                 |
+| `pnpm build`        | Build for production             |
+| `pnpm preview`      | Preview production build locally |
+| `pnpm lint`         | Lint with ESLint                 |
+| `pnpm lint:fix`     | Auto-fix lint issues             |
+| `pnpm format`       | Format with Prettier             |
 
 ## Deployment
 
 Deployed via Cloudflare Pages (git-connected). Push to `main` triggers auto-deploy.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for branch naming, page templates, designer vibe coding guide, and PR process.
