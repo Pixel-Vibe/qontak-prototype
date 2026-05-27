@@ -51,9 +51,24 @@ const statusLabel = computed(
 );
 
 const pillStyles: Record<Status, string> = {
-  online: css({ bg: "background.success", color: "text.success", rounded: "full", _hover: { bg: "background.success.hovered" } }),
-  busy: css({ bg: "background.danger", color: "text.danger", rounded: "full", _hover: { bg: "background.danger.hovered" } }),
-  offline: css({ bg: "background.neutral.subtle", color: "text.secondary", rounded: "full", _hover: { bg: "background.neutral.hovered" } })
+  online: css({
+    bg: "background.success",
+    color: "text.success",
+    rounded: "full",
+    _hover: { bg: "background.success.hovered" }
+  }),
+  busy: css({
+    bg: "background.danger",
+    color: "text.danger",
+    rounded: "full",
+    _hover: { bg: "background.danger.hovered" }
+  }),
+  offline: css({
+    bg: "background.neutral.subtle",
+    color: "text.secondary",
+    rounded: "full",
+    _hover: { bg: "background.neutral.hovered" }
+  })
 };
 
 const pill = computed(() => pillStyles[currentStatus.value]);

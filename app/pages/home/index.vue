@@ -132,7 +132,16 @@
 </template>
 
 <script setup lang="ts">
-import { MpBadge, MpButton, MpFlex, MpIcon, MpText, MpTextlink, css } from "@mekari/pixel3";
+import {
+  MpBadge,
+  MpButton,
+  MpFlex,
+  MpIcon,
+  MpText,
+  MpTextlink,
+  css,
+  type IconPropsType
+} from "@mekari/pixel3";
 import { usePixelLayout } from "~/composables/usePixelLayout";
 
 const { accountInformation } = usePixelLayout();
@@ -204,7 +213,7 @@ const QUICK_ACTIONS = [
 type BadgeType = "completed" | "warning" | "critical" | "announcement" | "information";
 
 const FEATURE_HIGHLIGHTS: {
-  icon: string;
+  icon: IconPropsType["name"];
   title: string;
   badge: string;
   badgeType: BadgeType;
@@ -343,14 +352,15 @@ const actionCard = css({
 
 // Icon wrap: size-36px rounded-md, bg varies per action
 function actionIconWrap(bg: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return css({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: "0",
     rounded: "md",
-    size: "9",
+    w: "9",
+    h: "9",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     bg: bg as any
   });
 }

@@ -11,6 +11,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
   // Already logged in and going to /login → redirect to home
   if (isLoggedIn && to.path === "/login") {
-    return navigateTo("/");
+    return navigateTo("/home");
   }
 });
