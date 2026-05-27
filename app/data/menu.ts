@@ -27,7 +27,7 @@ export type AppMenuGroup = AppMenuItem[];
 
 export const APP_MENU_GROUPS: AppMenuGroup[] = [
   [
-    { id: "home", icon: "home", label: "Home", route: "/" },
+    { id: "home", icon: "home", label: "Home", route: "/home" },
     {
       id: "inbox",
       icon: "inbox",

@@ -1,222 +1,228 @@
 # Menu And Page Architecture
 
-This doc captures how `/Users/mekari/Desktop/dev/qontak-design/app` builds Qontak sidebar navigation and how we should implement the same pattern here.
+## Overview
 
-## Source Findings
+Nuxt 4 SPA with file-based routing. One global default layout wraps all authenticated pages. `login.vue` is the only page that opts out.
 
-The reference app uses Nuxt file-based routing with one global default layout:
+## Key Files
 
-- `app/layouts/default.vue` owns top navbar, sidebar, submenu panel, page header, and content offset.
-- `app/composables/usePixelLayout.ts` exports shared layout constants and `contentAreaClass`.
-- `app/pages/**` mirrors route paths. Most pages are thin placeholders using `contentAreaClass`.
-- Parent routes such as `/inbox`, `/reports`, `/settings/account`, and `/loyalty/members` redirect to first useful child with `await navigateTo(..., { replace: true })`.
-- Page-level actions are controlled by `definePageMeta({ pageAction })`. Example: subscription sets `pageAction: { label: 'Top up quota', icon: null }`; knowledge base hides action with `{ label: null, icon: null }`.
+```txt
+app/data/menu.ts                      ← source of truth for all routes + labels
+app/composables/useAppMenu.ts         ← active route matching + page title derivation
+app/composables/usePixelLayout.ts     ← sidebar/navbar shared state (singleton)
+app/layouts/default.vue               ← shell: navbar + sidebar + slot
+app/components/navbar/index.vue       ← top navbar
+app/components/sidebar/index.vue      ← primary sidebar
+app/components/sidebar/SidebarChild.vue      ← submenu panel
+app/components/sidebar/SidebarChildItems.vue ← generic submenu list renderer
+app/components/inbox/InboxFilter.vue  ← inbox-specific submenu (special case)
+app/components/template/DefaultPageContent.vue ← scaffold for unbuilt pages
+```
 
-## Reference Menu Model
+## Menu Data Model
 
-The reference layout keeps menu data inline as `navGroups`. Shape:
+Defined in `app/data/menu.ts`:
 
 ```ts
-type NavGroup = NavItem[];
+type AppMenuGroup = AppMenuItem[];
 
-type NavItem = {
-  icon: string;
+type AppMenuItem = {
+  id: string;
+  icon: IconName;
   label: string;
   route: string;
   badge?: boolean;
+  isExternal?: boolean;
   submenu?: {
     title: string;
-    items: SubmenuItem[];
+    items: AppMenuChild[];
   };
 };
 
-type SubmenuItem = {
+type AppMenuChild = {
+  id: string;
   label: string;
   route: string;
-  count?: number;
+  query?: Record<string, string>;
+  count?: string | number;
   newTab?: boolean;
-  hasArrow?: boolean;
-  children?: SubmenuItem[];
+  children?: AppMenuChild[];
 };
 ```
 
-Current top-level menu groups:
+Exports: `APP_MENU_GROUPS` (grouped for sidebar rendering), `APP_MENU_ITEMS` (flat for route matching).
 
-- Main: Home, Inbox, Calls, Campaigns, Bot & automation.
-- CRM/reporting: Customers, Loyalty, Reports.
-- Work: Deals, Tickets, Tasks.
-- Operations: Commerce, Resources, Documents, Products, Expenses.
-- Custom: Custom solutions.
-- Account: Subscription, Settings.
+## Composables
 
-Submenus support two levels:
+### `useAppMenu`
 
-- Regular child item: click navigates to `route`.
-- Accordion parent: click expands and navigates to first child route.
+Handles all active-state and title derivation. Call in layout or components that need route awareness.
 
-## Layout Behavior
-
-The default layout derives all navigation UI from menu config:
-
-- If current route starts with a top-level route that has `submenu`, the sidebar collapses to icon width and a second submenu panel opens.
-- If no submenu is active, sidebar stays full width.
-- `activePageTitle` is computed from the matching deepest menu item label.
-- Active top-level item uses `route.path.startsWith(item.route)`, except `/` must match exactly.
-- Submenu accordion auto-expands when current route starts with the accordion parent route.
-- Main content `margin-left` switches between full sidebar width and collapsed-sidebar plus submenu width.
-- Header action reads `route.meta.pageAction`; missing meta falls back to default `Action` button.
-
-Reference dimensions:
-
-- Topbar: `56px`.
-- Full sidebar: `240px`.
-- Collapsed icon sidebar: `52px`.
-- Submenu panel: `212px`.
-- Page header: `72px`.
-
-## Recommended Implementation
-
-Use same behavior, but split data and layout responsibilities earlier so future pages stay easy to add.
-
-Create these files:
-
-```txt
-app/data/menu.ts
-app/composables/useMenuState.ts
-app/composables/usePixelLayout.ts
-app/layouts/default.vue
-app/pages/**
+```ts
+const {
+  menuGroups,       // APP_MENU_GROUPS — for sidebar rendering
+  menuItems,        // APP_MENU_ITEMS — flat list
+  activeTopMenu,    // currently active top-level item
+  activeSubmenu,    // activeTopMenu if it has submenu, else null
+  activeChildMenu,  // deepest matching child item
+  activePageTitle,  // label of deepest active item
+  getFirstChildRoute, // resolves default child for a menu item
+  isRouteActive     // (itemRoute: string) => boolean
+} = useAppMenu();
 ```
 
-Keep `app/data/menu.ts` as source of truth for:
+Route matching: `startsWith(route + "/")` except `/` which must match exactly.
 
-- Menu groups.
-- Top-level routes.
-- Submenu routes.
-- Default child route for parent redirects.
-- Display labels used by page header.
-- Badges, counts, new-tab flags, and accordion children.
+### `usePixelLayout`
 
-Keep `app/layouts/default.vue` focused on rendering:
+Sidebar collapse state, navbar height CSS var, account info. Singleton module-level state.
 
-- Top navbar.
-- Primary sidebar.
-- Submenu panel.
-- Page header.
-- `<slot />` content area.
-
-Move matching logic into `useMenuState.ts`:
-
-- `activeTopItem`.
-- `activeSubmenu`.
-- `activeAccordion`.
-- `activePageTitle`.
-- `isActiveRoute(route)`.
-- `getDefaultRoute(item)`.
-
-This keeps layout readable and makes route behavior testable without parsing template code.
-
-## Page Creation Rules
-
-For a menu item with no submenu:
-
-```txt
-route: /calls
-file: app/pages/calls.vue
+```ts
+const {
+  accountInformation,      // readonly ref: fullName, companyName, companyId, userPhoto
+  setAccountInformation,   // update account info (called by auth)
+  isSidebarCollapsed,
+  isSidebarHovered,
+  useSidebar,              // { toggle, setCollapse, calculateCssVar, setLoading }
+  isSidebarChildCollapsed,
+  useSidebarChild,         // { toggle }
+  navbarNode,
+  sidebarNode,
+  pixelContentAttrs        // style attrs for main content wrapper
+} = usePixelLayout();
 ```
 
-Page skeleton:
+## Layout Behavior (`default.vue`)
+
+```
+TheNavbar (fixed, full width)
+└── bg-surface flex row
+    ├── TheSidebar (collapsed when submenu active)
+    ├── SidebarChild (visible when activeSubmenu exists)
+    │   ├── InboxFilter      (when activeTopMenu.id === 'inbox')
+    │   └── SidebarChildItems (all other routes with submenu)
+    └── <slot /> ← page content
+```
+
+- When route has a submenu: sidebar auto-collapses (`useSidebar.setCollapse(true)`), `SidebarChild` opens.
+- When route has no submenu: sidebar full width, no `SidebarChild`.
+- Pages do not set `definePageMeta({ layout: "default" })` — Nuxt uses default layout automatically.
+- Only exception: `login.vue` sets `definePageMeta({ layout: false })`.
+
+## Dimensions
+
+From `app/data/constants.ts`:
+
+| Element | Value |
+|---------|-------|
+| Navbar height | 56px |
+| Sidebar expanded | 216px |
+| Sidebar collapsed | 52px (`SIDEBAR_COLLAPSED_WIDTH`) |
+| Submenu panel | 212px |
+| Panel header height | 60px (`PANEL_HEADER_HEIGHT`) |
+
+## Page Structure Rules
+
+**Convention: every page lives in its own folder as `index.vue`. No flat `.vue` files (except `login.vue`).**
+
+### Unbuilt page (placeholder)
 
 ```vue
 <template>
-  <div :class="contentAreaClass">
-    <MpText color="text.secondary">Place content here...</MpText>
-  </div>
+  <DefaultPageContent />
+</template>
+```
+
+No script needed. `DefaultPageContent` auto-reads `activePageTitle` from `useAppMenu` and renders a standard header + content area shell.
+
+### Built page (custom content)
+
+Copy `DefaultPageContent` structure as starting point:
+
+```vue
+<template>
+  <main
+    data-pixel-component="PixelContent"
+    style="padding-top: var(--pixel-navbar-height); min-height: 100svh; width: 100%"
+  >
+    <!-- page header -->
+    <MpFlex justifyContent="space-between" alignItems="center" px="6" py="4">
+      <MpText size="h1" weight="semiBold">{{ activePageTitle }}</MpText>
+      <MpButton variant="primary">Action</MpButton>
+    </MpFlex>
+
+    <!-- content area -->
+    <div
+      :class="css({
+        bg: 'background.neutral',
+        borderTopWidth: '1px',
+        borderLeftWidth: '1px',
+        borderColor: 'border.default',
+        roundedTopLeft: 'md',
+        p: 6,
+        minH: '100svh'
+      })"
+    >
+      <!-- your content -->
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">
-import { MpText } from "@mekari/pixel3";
-import { contentAreaClass } from "~/composables/usePixelLayout";
+import { MpButton, MpFlex, MpText, css } from "@mekari/pixel3";
+import { useAppMenu } from "~/composables/useAppMenu";
 
-definePageMeta({ layout: "default" });
+const { activePageTitle } = useAppMenu();
 </script>
 ```
 
-For a menu item with submenu:
-
-```txt
-route: /inbox
-redirect file: app/pages/inbox/index.vue
-first child file: app/pages/inbox/all-chats.vue
-```
-
-Redirect skeleton:
+### Parent route redirect (submenu or accordion)
 
 ```vue
 <script setup lang="ts">
-definePageMeta({ layout: "default" });
 await navigateTo("/inbox/all-chats", { replace: true });
 </script>
 ```
 
-For accordion submenu:
+No `definePageMeta` needed. Parent route should never render content — redirect to first child.
+
+## File Locations
 
 ```txt
-route: /settings/account
-redirect file: app/pages/settings/account/index.vue
-first child file: app/pages/settings/account/users.vue
+route: /calls
+file:  app/pages/calls/index.vue
+
+route: /inbox  (has submenu)
+files: app/pages/inbox/index.vue          ← redirect to /inbox/all-chats
+       app/pages/inbox/all-chats/index.vue
+       app/pages/inbox/my-chats/index.vue
+       ...
+
+route: /settings/account  (accordion submenu)
+files: app/pages/settings/account/index.vue  ← redirect to /settings/account/users
+       app/pages/settings/account/users/index.vue
+       ...
 ```
-
-Use same redirect skeleton. Parent route should not render content unless product requires a real overview page.
-
-## Page Action Rules
-
-Default layout can show one primary header action.
-
-Use default action:
-
-```ts
-definePageMeta({ layout: "default" });
-```
-
-Customize action:
-
-```ts
-definePageMeta({
-  layout: "default",
-  pageAction: { label: "Top up quota", icon: null }
-});
-```
-
-Hide action:
-
-```ts
-definePageMeta({
-  layout: "default",
-  pageAction: { label: null, icon: null }
-});
-```
-
-Keep complex page-specific actions inside page content, not global layout, unless they belong in every view of that route family.
 
 ## Implementation Checklist
 
-When adding a new menu/page:
+When adding a new menu item and page:
 
-1. Add item to `app/data/menu.ts`.
-2. Add matching `app/pages/**` file.
-3. If item has submenu, add parent `index.vue` redirect to first child.
-4. If item has accordion children, add group `index.vue` redirect to first child.
-5. Use `definePageMeta({ layout: 'default' })`.
-6. Use `contentAreaClass` for standard body background, border, radius, and padding.
-7. Only add `pageAction` when page header button differs from default.
-8. Verify active state, submenu open state, title, and redirect route in browser.
+1. Add item to `app/data/menu.ts` (correct group, id, icon, route).
+2. Create `app/pages/[route]/index.vue`.
+3. If item has submenu: add `index.vue` redirect to first child route.
+4. If item has accordion children: add group `index.vue` redirect to first child.
+5. Start with `<DefaultPageContent />` — replace when building real content.
+6. Verify: active highlight in sidebar, submenu opens/closes, page title correct, redirect works.
 
 ## Guardrails
 
-- Do not hardcode menu labels in pages. Page title should come from menu config.
-- Do not duplicate route matching in template. Keep route logic in composable.
-- Do not create parent pages that only duplicate first child content. Redirect instead.
-- Do not add third menu level unless product needs it. Current pattern supports top-level, submenu, and accordion child.
-- Do not put large page-specific UI into layout. Layout stays shell-only.
-- Keep Pixel tokens and components for layout chrome. Avoid custom CSS unless Pixel utility cannot express needed state.
+- Do not use `definePageMeta({ layout: "default" })` — redundant, Nuxt uses it by default.
+- Do not create flat `app/pages/foo.vue` files. Always use `app/pages/foo/index.vue`. Exception: `login.vue`.
+- Do not hardcode page titles in pages. Use `activePageTitle` from `useAppMenu`.
+- Do not duplicate route matching in components. Use `isRouteActive` from `useAppMenu`.
+- Do not create parent pages that render content. Redirect to first child instead.
+- Do not add a third menu level unless the product requires it. Current pattern: top-level → submenu → accordion children.
+- Do not put page-specific UI into `default.vue`. Layout stays shell-only (navbar + sidebar + slot).
+- Do not reference `useMenuState` — the composable is `useAppMenu`.
+- Do not reference `contentAreaClass` from `usePixelLayout` — it does not exist. Use `pixelContentAttrs` or copy the `DefaultPageContent` structure.

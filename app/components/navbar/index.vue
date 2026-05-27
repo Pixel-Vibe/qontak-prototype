@@ -21,37 +21,27 @@
     "
   >
     <div data-slot="leftContent" :class="css({ display: 'flex', gap: '2', alignItems: 'center' })">
-      <MpFlex alignItems="center">
-        <NuxtLink to="/">
-          <img
-            :class="css({ display: 'block', _dark: { display: 'none' } })"
-            src="https://cdn.mekari.design/logo/qontak/default.svg"
-            alt="Mekari Qontak"
-            height="56"
-            width="auto"
-          />
-          <img
-            :class="css({ display: 'none', _dark: { display: 'block' } })"
-            src="https://cdn.mekari.design/logo/qontak/white.svg"
-            alt="Mekari Qontak"
-            height="56"
-            width="auto"
-          />
-        </NuxtLink>
-        <MpDivider orientation="vertical" :class="css({ height: 6, mr: '4', ml: '6' })" />
-        <SelectApp
-          :model-value="{ id: 1, label: 'Omnichannel', isSelected: true }"
-          :items="[
-            { id: 1, label: 'Omnichannel', isSelected: true },
-            { id: 2, label: 'CRM' },
-            { id: 3, label: 'Knowledge Base', isNew: true }
-          ]"
-          @update:model-value="(val) => console.log('app switched:', val)"
+      <NuxtLink to="/home">
+        <img
+          :class="css({ display: 'block', _dark: { display: 'none' } })"
+          src="https://cdn.mekari.design/logo/qontak/default.svg"
+          alt="Mekari Qontak"
+          height="56"
+          width="auto"
         />
-      </MpFlex>
+        <img
+          :class="css({ display: 'none', _dark: { display: 'block' } })"
+          src="https://cdn.mekari.design/logo/qontak/white.svg"
+          alt="Mekari Qontak"
+          height="56"
+          width="auto"
+        />
+      </NuxtLink>
     </div>
 
     <div data-slot="rightContent" :class="css({ display: 'flex', gap: '2', alignItems: 'center' })">
+      <OnlineStatus />
+
       <Notification>
         <NotificationContent />
       </Notification>
@@ -135,10 +125,10 @@
 </template>
 
 <script setup lang="ts">
-import { css, MpDivider, MpFlex, MpText } from "@mekari/pixel3";
+import { css } from "@mekari/pixel3";
 import { usePixelLayout } from "~/composables/usePixelLayout";
 import { NAVBAR_HEIGHT } from "~/data/constants";
-import SelectApp from "~/components/navbar/SelectApp.vue";
+import OnlineStatus from "~/components/navbar/OnlineStatus.vue";
 import Notification from "~/components/navbar/Notification.vue";
 import NotificationContent from "~/components/navbar/NotificationContent.vue";
 import SwitchApp from "~/components/navbar/SwitchApp.vue";
@@ -147,12 +137,5 @@ import SwitchAccount from "~/components/navbar/SwitchAccount.vue";
 import SwitchAccountContent from "~/components/navbar/SwitchAccountContent.vue";
 import SidebarMobile from "~/components/sidebar/SidebarMobile.vue";
 
-const { navbarNode, setAccountInformation, accountInformation } = usePixelLayout();
-
-setAccountInformation({
-  companyId: "12345678",
-  companyName: "PT Central Perk Indonesia",
-  fullName: "Christin Purnama Sari",
-  userPhoto: ""
-});
+const { navbarNode, accountInformation } = usePixelLayout();
 </script>
