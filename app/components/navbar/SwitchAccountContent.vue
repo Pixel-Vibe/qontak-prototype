@@ -10,6 +10,7 @@
         borderColor="border.default"
         px="3"
         py="4"
+        roundedTop="md"
       >
         <MpAvatar
           :name="accountInformation.fullName"
@@ -80,6 +81,7 @@
         bg="background.neutral.subtle"
         borderBottomWidth="1"
         borderColor="border.default"
+        roundedTop="md"
       >
         <MpButton
           aria-label="back"
@@ -136,6 +138,7 @@
         bg="background.neutral.subtle"
         borderBottomWidth="1"
         borderColor="border.default"
+        roundedTop="md"
       >
         <MpButton
           aria-label="back"
@@ -168,6 +171,7 @@
         bg="background.neutral.subtle"
         borderBottomWidth="1"
         borderColor="border.default"
+        roundedTop="md"
       >
         <MpButton
           aria-label="back"
@@ -203,6 +207,7 @@
         bg="background.neutral.subtle"
         borderBottomWidth="1"
         borderColor="border.default"
+        roundedTop="md"
       >
         <MpButton
           aria-label="back"

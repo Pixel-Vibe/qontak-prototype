@@ -60,14 +60,14 @@ Handles all active-state and title derivation. Call in layout or components that
 
 ```ts
 const {
-  menuGroups,       // APP_MENU_GROUPS — for sidebar rendering
-  menuItems,        // APP_MENU_ITEMS — flat list
-  activeTopMenu,    // currently active top-level item
-  activeSubmenu,    // activeTopMenu if it has submenu, else null
-  activeChildMenu,  // deepest matching child item
-  activePageTitle,  // label of deepest active item
+  menuGroups, // APP_MENU_GROUPS — for sidebar rendering
+  menuItems, // APP_MENU_ITEMS — flat list
+  activeTopMenu, // currently active top-level item
+  activeSubmenu, // activeTopMenu if it has submenu, else null
+  activeChildMenu, // deepest matching child item
+  activePageTitle, // label of deepest active item
   getFirstChildRoute, // resolves default child for a menu item
-  isRouteActive     // (itemRoute: string) => boolean
+  isRouteActive // (itemRoute: string) => boolean
 } = useAppMenu();
 ```
 
@@ -79,16 +79,16 @@ Sidebar collapse state, navbar height CSS var, account info. Singleton module-le
 
 ```ts
 const {
-  accountInformation,      // readonly ref: fullName, companyName, companyId, userPhoto
-  setAccountInformation,   // update account info (called by auth)
+  accountInformation, // readonly ref: fullName, companyName, companyId, userPhoto
+  setAccountInformation, // update account info (called by auth)
   isSidebarCollapsed,
   isSidebarHovered,
-  useSidebar,              // { toggle, setCollapse, calculateCssVar, setLoading }
+  useSidebar, // { toggle, setCollapse, calculateCssVar, setLoading }
   isSidebarChildCollapsed,
-  useSidebarChild,         // { toggle }
+  useSidebarChild, // { toggle }
   navbarNode,
   sidebarNode,
-  pixelContentAttrs        // style attrs for main content wrapper
+  pixelContentAttrs // style attrs for main content wrapper
 } = usePixelLayout();
 ```
 
@@ -113,13 +113,13 @@ TheNavbar (fixed, full width)
 
 From `app/data/constants.ts`:
 
-| Element | Value |
-|---------|-------|
-| Navbar height | 56px |
-| Sidebar expanded | 216px |
-| Sidebar collapsed | 52px (`SIDEBAR_COLLAPSED_WIDTH`) |
-| Submenu panel | 212px |
-| Panel header height | 60px (`PANEL_HEADER_HEIGHT`) |
+| Element             | Value                            |
+| ------------------- | -------------------------------- |
+| Navbar height       | 56px                             |
+| Sidebar expanded    | 216px                            |
+| Sidebar collapsed   | 52px (`SIDEBAR_COLLAPSED_WIDTH`) |
+| Submenu panel       | 212px                            |
+| Panel header height | 60px (`PANEL_HEADER_HEIGHT`)     |
 
 ## Page Structure Rules
 
@@ -153,15 +153,17 @@ Copy `DefaultPageContent` structure as starting point:
 
     <!-- content area -->
     <div
-      :class="css({
-        bg: 'background.neutral',
-        borderTopWidth: '1px',
-        borderLeftWidth: '1px',
-        borderColor: 'border.default',
-        roundedTopLeft: 'md',
-        p: 6,
-        minH: '100svh'
-      })"
+      :class="
+        css({
+          bg: 'background.neutral',
+          borderTopWidth: '1px',
+          borderLeftWidth: '1px',
+          borderColor: 'border.default',
+          roundedTopLeft: 'md',
+          p: 6,
+          minH: '100svh'
+        })
+      "
     >
       <!-- your content -->
     </div>

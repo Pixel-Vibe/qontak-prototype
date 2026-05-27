@@ -47,14 +47,14 @@ This prototype uses dummy auth (no backend).
 
 ## Scripts
 
-| Command             | Description                      |
-| ------------------- | -------------------------------- |
-| `pnpm dev`          | Start dev server                 |
-| `pnpm build`        | Build for production             |
-| `pnpm preview`      | Preview production build locally |
-| `pnpm lint`         | Lint with ESLint                 |
-| `pnpm lint:fix`     | Auto-fix lint issues             |
-| `pnpm format`       | Format with Prettier             |
+| Command         | Description                      |
+| --------------- | -------------------------------- |
+| `pnpm dev`      | Start dev server                 |
+| `pnpm build`    | Build for production             |
+| `pnpm preview`  | Preview production build locally |
+| `pnpm lint`     | Lint with ESLint                 |
+| `pnpm lint:fix` | Auto-fix lint issues             |
+| `pnpm format`   | Format with Prettier             |
 
 ## Deployment
 

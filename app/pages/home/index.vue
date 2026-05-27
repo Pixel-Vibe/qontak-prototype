@@ -15,9 +15,7 @@
   <main :class="pageShell">
     <!-- ═════ Welcome header ═════ -->
     <section :class="welcomeSection">
-      <MpText color="text.default">
-        Welcome back, {{ accountInformation.fullName }}
-      </MpText>
+      <MpText color="text.default"> Welcome back, {{ accountInformation.fullName }} </MpText>
       <MpText size="h3" weight="semiBold" color="text.default" :class="css({ mt: '1' })">
         What activity would you like to do?
       </MpText>
@@ -56,11 +54,7 @@
       </MpText>
 
       <div :class="featureListContainer">
-        <div
-          v-for="(item, idx) in FEATURE_HIGHLIGHTS"
-          :key="idx"
-          :class="featureRow"
-        >
+        <div v-for="(item, idx) in FEATURE_HIGHLIGHTS" :key="idx" :class="featureRow">
           <div :class="featureIconCircle">
             <MpIcon :name="item.icon" size="sm" :class="css({ color: 'icon.default' })" />
           </div>
@@ -103,11 +97,7 @@
       </MpText>
 
       <div :class="trainingGrid">
-        <div
-          v-for="session in TRAINING_SESSIONS"
-          :key="session.title"
-          :class="trainingCard"
-        >
+        <div v-for="session in TRAINING_SESSIONS" :key="session.title" :class="trainingCard">
           <!-- Card header image area (gradient replaces Figma illustration assets) -->
           <div :class="trainingCardHeader" :style="{ background: session.headerColor }" />
 
@@ -245,7 +235,8 @@ const FEATURE_HIGHLIGHTS: {
     title: "Billing",
     badge: "System update",
     badgeType: "warning",
-    description: "Mekari has adjusted its billing. This update will be reflected in Mekari Qontak billing.",
+    description:
+      "Mekari has adjusted its billing. This update will be reflected in Mekari Qontak billing.",
     linkText: "View pricing details",
     date: "3 Nov 2025"
   },
@@ -353,7 +344,15 @@ const actionCard = css({
 // Icon wrap: size-36px rounded-md, bg varies per action
 function actionIconWrap(bg: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return css({ display: "flex", alignItems: "center", justifyContent: "center", flexShrink: "0", rounded: "md", size: "9", bg: bg as any });
+  return css({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: "0",
+    rounded: "md",
+    size: "9",
+    bg: bg as any
+  });
 }
 
 // Feature highlights: list with bottom borders, no outer border card
@@ -381,7 +380,7 @@ const featureIconCircle = css({
   alignItems: "center",
   justifyContent: "center",
   flexShrink: "0",
-  bg: "background.neutral-pressed",
+  bg: "background.neutral.pressed",
   rounded: "full",
   size: "38px"
 });
