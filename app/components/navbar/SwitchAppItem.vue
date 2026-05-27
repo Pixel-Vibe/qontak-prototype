@@ -54,7 +54,8 @@
 </template>
 
 <script setup lang="ts">
-import { MpFlex, MpIcon, MpText, css } from "@mekari/pixel3";
+import { MpFlex, MpIcon, MpText, css, type IconName } from "@mekari/pixel3";
+import type { PropType } from "vue";
 
 const props = defineProps({
   as: {
@@ -63,7 +64,7 @@ const props = defineProps({
   },
   title: [String],
   description: [String],
-  icon: [String],
+  icon: { type: String as PropType<IconName | undefined> },
   newtab: {
     type: Boolean,
     default: false

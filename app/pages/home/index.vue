@@ -140,7 +140,7 @@ import {
   MpText,
   MpTextlink,
   css,
-  type IconPropsType
+  type IconName
 } from "@mekari/pixel3";
 import { usePixelLayout } from "~/composables/usePixelLayout";
 
@@ -213,7 +213,7 @@ const QUICK_ACTIONS = [
 type BadgeType = "completed" | "warning" | "critical" | "announcement" | "information";
 
 const FEATURE_HIGHLIGHTS: {
-  icon: IconPropsType["name"];
+  icon: IconName;
   title: string;
   badge: string;
   badgeType: BadgeType;
@@ -392,7 +392,8 @@ const featureIconCircle = css({
   flexShrink: "0",
   bg: "background.neutral.pressed",
   rounded: "full",
-  size: "38px"
+  w: "38px",
+  h: "38px"
 });
 
 // Figma training section: gap-24px items-center, 3-column grid

@@ -85,7 +85,7 @@
                   })
                 "
               >
-                <MpIcon v-if="item.icon" :name="item.icon" />
+                <MpIcon v-if="item.icon" :name="(item.icon as IconName)" />
                 <MpAvatar v-if="item.avatar" :src="item.avatar" />
 
                 <div
@@ -185,8 +185,10 @@ import {
   MpTabs,
   MpText,
   MpTooltip,
-  css
+  css,
+  type IconName
 } from "@mekari/pixel3";
+
 
 const currentTab = ref(0);
 const notificationTitle = ref();
@@ -319,7 +321,7 @@ function handleSticky() {
   if (!el) return;
   const observer = new IntersectionObserver(
     (entries) => {
-      isHeaderSticky.value = !entries[0].isIntersecting;
+      isHeaderSticky.value = !entries[0]?.isIntersecting;
     },
     { threshold: [0] }
   );

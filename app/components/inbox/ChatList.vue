@@ -134,12 +134,12 @@
 
 <script setup lang="ts">
 import { ref, computed, type PropType } from "vue";
-import { css, MpText, MpFlex, MpIcon, MpBadge, MpCheckbox, token } from "@mekari/pixel3";
+import { css, MpText, MpFlex, MpIcon, MpBadge, MpCheckbox, token, type IconName } from "@mekari/pixel3";
 import type { ChatContent, ChatStatus } from "~/data/chat";
 
 const props = defineProps({
   id: { type: String, default: "" },
-  iconName: { type: String, default: "qontak-brand" },
+  iconName: { type: String as PropType<IconName>, default: "qontak-brand" },
   senderName: { type: String, default: "" },
   timeStamp: { type: String, default: "" },
   sla: { type: String, default: "" },
