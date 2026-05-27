@@ -352,15 +352,8 @@ const actionCard = css({
 
 // Icon wrap: size-36px rounded-md, bg varies per action
 function actionIconWrap(bg: string) {
-  return css({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: "0",
-    rounded: "md",
-    size: "9",
-    bg: bg as any
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return css({ display: "flex", alignItems: "center", justifyContent: "center", flexShrink: "0", rounded: "md", size: "9", bg: bg as any });
 }
 
 // Feature highlights: list with bottom borders, no outer border card
