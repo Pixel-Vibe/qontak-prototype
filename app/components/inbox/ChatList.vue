@@ -134,7 +134,16 @@
 
 <script setup lang="ts">
 import { ref, computed, type PropType } from "vue";
-import { css, MpText, MpFlex, MpIcon, MpBadge, MpCheckbox, token, type IconName } from "@mekari/pixel3";
+import {
+  css,
+  MpText,
+  MpFlex,
+  MpIcon,
+  MpBadge,
+  MpCheckbox,
+  token,
+  type IconName
+} from "@mekari/pixel3";
 import type { ChatContent, ChatStatus } from "~/data/chat";
 
 const props = defineProps({
