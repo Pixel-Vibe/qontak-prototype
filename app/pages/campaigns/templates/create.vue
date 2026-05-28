@@ -146,10 +146,7 @@
               <template #description>Broadcast messages to multiple recipients.</template>
             </MpRadio>
             <MpRadio id="type-marketing-optin" value="marketing_optin" v-model="selectedType">
-              <MpFlex as="span" alignItems="center" gap="2">
-                Marketing opt-in
-                <MpBadge for="tableStatus" type="announcement">New</MpBadge>
-              </MpFlex>
+              Marketing opt-in
               <template #description>
                 Collect customer's consent to receive marketing campaign.
                 <MpText as="a" href="#" color="text.link" is-text-link :class="css({ ml: '1' })">Learn more</MpText>
@@ -159,6 +156,15 @@
               Follow-up
               <template #description>
                 Reach out to recipients when conversation window is expired through inbox.
+              </template>
+            </MpRadio>
+            <MpRadio id="type-carousel" value="carousel" v-model="selectedType">
+              <MpFlex as="span" alignItems="center" gap="2">
+                Carousel
+                <MpBadge for="additionalInformation" type="critical">NEW</MpBadge>
+              </MpFlex>
+              <template #description>
+                Send scrollable cards with images and buttons to showcase multiple products or offers.
               </template>
             </MpRadio>
           </MpFlex>
@@ -174,13 +180,13 @@
                 Send promotional offers, product announcements, and more to boost awareness and engagement.
               </template>
             </MpRadio>
-            <MpRadio id="cat-utility" value="utility" v-model="selectedCategory" :is-disabled="isMarketingOptin">
+            <MpRadio id="cat-utility" value="utility" v-model="selectedCategory" :is-disabled="isMarketingOptin || isCarousel">
               Utility
               <template #description>
                 Send account updates, order updates, alerts, and other important information.
               </template>
             </MpRadio>
-            <MpRadio id="cat-authentication" value="authentication" v-model="selectedCategory" :is-disabled="isMarketingOptin || isFollowup">
+            <MpRadio id="cat-authentication" value="authentication" v-model="selectedCategory" :is-disabled="isMarketingOptin || isFollowup || isCarousel">
               Authentication
               <template #description>
                 Send access codes to customers. Campaigns can only be sent via API.
@@ -255,28 +261,28 @@
 
         <div v-if="mediaType !== 'none'" :class="css({ mb: '2' })">
           <MpFormControl id="fc-media-file" is-required>
-            <MpFlex justifyContent="space-between" alignItems="flex-end" :class="css({ mb: '1' })">
-              <MpFormLabel :class="css({ mb: '0' })">{{ mediaFileLabel }}</MpFormLabel>
-            </MpFlex>
-            <MpInputGroup id="ig-media-file" size="md" :class="css({ maxW: '400px' })">
-              <MpInputLeftAddon id="ig-browse-btn" :class="css({ cursor: 'pointer', userSelect: 'none' })" @click="browseFile">
-                Browse file
-              </MpInputLeftAddon>
-              <MpInput id="input-media-filename" :model-value="uploadedFileName" placeholder="No file chosen" is-read-only />
-            </MpInputGroup>
+            <MpFormLabel>{{ mediaFileLabel }}</MpFormLabel>
+            <MpUpload
+              id="upload-media-file"
+              :accept="mediaFileAccept"
+              placeholder="No file chosen"
+              button-text="Browse file"
+              :class="css({ maxW: '400px' })"
+              @change="handleFileChange"
+              @clear="handleFileClear"
+            />
             <MpFormHelpText>{{ mediaFileHelper }}</MpFormHelpText>
           </MpFormControl>
 
-          <input ref="fileInputRef" type="file" :accept="mediaFileAccept" style="display: none" @change="handleFileChange" />
-
-          <MpCheckbox
-            id="cb-save-media"
-            :is-checked="saveMediaSample"
-            :class="css({ mt: '3' })"
-            @change="saveMediaSample = $event"
-          >
-            Save media sample to use in campaign
-          </MpCheckbox>
+          <div :class="css({ mt: '5' })">
+            <MpCheckbox
+              id="cb-save-media"
+              :is-checked="saveMediaSample"
+              @change="saveMediaSample = $event"
+            >
+              Save media sample to use in campaign
+            </MpCheckbox>
+          </div>
         </div>
 
         <div :class="css({ borderTopWidth: '1px', borderColor: 'border.default', my: '6' })" />
@@ -426,8 +432,7 @@ import {
   MpFormHelpText,
   MpFormErrorMessage,
   MpInput,
-  MpInputGroup,
-  MpInputLeftAddon,
+  MpUpload,
   MpAutocomplete,
   MpRichTextEditor,
   MpSelect,
@@ -547,14 +552,12 @@ const language = ref('')
 
 // ─── Step 2 fields ─────────────────────────────────────────────────────────────
 const mediaType = ref('none')
-const uploadedFileName = ref('')
 const previewImageUrl = ref<string | null>(null)
 const saveMediaSample = ref(false)
 const messageBodyHtml = ref('')
 const rteEditorInstance = ref<any>(null)
 const variableSamples = reactive<Record<number, string>>({})
 const actionType = ref('')
-const fileInputRef = ref<HTMLInputElement | null>(null)
 
 // ─── Computed ──────────────────────────────────────────────────────────────────
 const mediaFileLabel = computed(() => ({
@@ -589,6 +592,15 @@ const isFollowup = computed(() => selectedType.value === 'followup')
 
 watch(isFollowup, (val) => {
   if (val && selectedCategory.value === 'authentication') {
+    selectedCategory.value = 'marketing'
+  }
+})
+
+// When Carousel is selected, only Marketing category is allowed
+const isCarousel = computed(() => selectedType.value === 'carousel')
+
+watch(isCarousel, (val) => {
+  if (val && selectedCategory.value !== 'marketing') {
     selectedCategory.value = 'marketing'
   }
 })
@@ -638,18 +650,17 @@ function handleRteAction(action: string) {
   }
 }
 
-function browseFile() {
-  fileInputRef.value?.click()
-}
-
 function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement
   const file = target.files?.[0]
   if (!file) return
-  uploadedFileName.value = file.name
   if (mediaType.value === 'image') {
     previewImageUrl.value = URL.createObjectURL(file)
   }
+}
+
+function handleFileClear() {
+  previewImageUrl.value = null
 }
 
 function handleClose() {

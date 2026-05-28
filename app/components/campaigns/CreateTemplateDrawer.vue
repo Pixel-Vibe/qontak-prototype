@@ -35,27 +35,13 @@
           <div
             v-for="option in TEMPLATE_OPTIONS"
             :key="option.value"
-            :class="css({
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '3',
-              p: '4',
-              borderWidth: '1px',
-              borderRadius: 'md',
-              cursor: 'pointer',
-              transition: 'all 0.15s',
-              borderColor: selected === option.value ? 'background.brand.bold' : 'border.default',
-              bg: selected === option.value ? 'background.brand.subtle' : 'background.default',
-              _hover: {
-                borderColor: 'border.strong',
-              },
-            })"
+            :class="cardClass(option.value)"
             @click="handleSelect(option.value)"
           >
             <MpIcon
               :name="option.icon"
               size="md"
-              :color="selected === option.value ? 'background.brand.bold' : 'icon.secondary'"
+              :color="selected === option.value ? 'background.brand.bold' : 'icon.default'"
             />
             <div>
               <MpText
@@ -95,22 +81,44 @@ import {
 defineProps<{ isOpen: boolean }>()
 const emit = defineEmits<{ close: []; select: [value: string] }>()
 
-const selected = ref('campaign-message')
+const selected = ref('')
 
 const TEMPLATE_OPTIONS = [
   {
     value: 'campaign-message',
     label: 'Campaign message',
     description: 'Fully customizable message to broadcast your marketing messages.',
-    icon: 'announcement',
+    icon: 'broadcast',
   },
   {
     value: 'phone-number-request',
     label: 'Phone number request',
     description: "META predefined message to request customer's phone number.",
-    icon: 'call',
+    icon: 'mobile',
   },
 ]
+
+function cardClass(value: string) {
+  const isSelected = selected.value === value
+  return css({
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '3',
+    p: '4',
+    borderWidth: '1px',
+    borderRadius: 'md',
+    cursor: 'pointer',
+    transition: 'all 0.15s',
+    borderColor: isSelected ? 'background.brand.bold' : 'border.default',
+    bg: isSelected ? 'background.brand.subtle' : 'background.default',
+    _hover: {
+      bg: isSelected ? 'background.brand.subtle' : 'background.neutral.hovered',
+    },
+    _active: {
+      bg: isSelected ? 'background.brand.subtle' : 'background.neutral.pressed',
+    },
+  })
+}
 
 function handleSelect(value: string) {
   selected.value = value
