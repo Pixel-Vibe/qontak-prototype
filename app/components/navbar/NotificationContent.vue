@@ -85,7 +85,7 @@
                   })
                 "
               >
-                <MpIcon v-if="item.icon" :name="(item.icon as IconName)" />
+                <MpIcon v-if="item.icon" :name="item.icon as IconName" />
                 <MpAvatar v-if="item.avatar" :src="item.avatar" />
 
                 <div
@@ -188,7 +188,6 @@ import {
   css,
   type IconName
 } from "@mekari/pixel3";
-
 
 const currentTab = ref(0);
 const notificationTitle = ref();
