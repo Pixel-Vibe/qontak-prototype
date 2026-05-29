@@ -439,9 +439,9 @@
 
         <!-- WhatsApp-style chat bubble -->
         <div
-          class="wa-bg"
           :class="
             css({
+              bg: '#e5ddd5',
               borderRadius: 'lg',
               p: '4',
               minH: '320px',
@@ -817,32 +817,3 @@ async function handleSubmit() {
   navigateTo("/campaigns/templates");
 }
 </script>
-
-<style scoped>
-/* Stepper circle number labels */
-.step-num {
-  font-size: 11px;
-  color: white;
-  font-weight: 600;
-  line-height: 1;
-}
-.step-num-inactive {
-  font-size: 11px;
-  color: var(--mp-colors-text-secondary);
-  font-weight: 600;
-  line-height: 1;
-}
-
-/* Remove MpTextarea's own border since it sits inside our custom wrapper */
-.editor-wrapper :deep(.mp-textarea) {
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-/* WhatsApp chat background colour */
-.wa-bg {
-  background-color: #e5ddd5;
-}
-</style>
