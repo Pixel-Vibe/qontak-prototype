@@ -23,7 +23,7 @@
               v-if="currentStatus === opt.value"
               name="check"
               size="sm"
-              :class="css({ color: 'icon.default', flexShrink: '0' })"
+              :class="css({ color: 'icon.selected', flexShrink: '0' })"
             />
           </MpFlex>
         </MpPopoverListItem>
