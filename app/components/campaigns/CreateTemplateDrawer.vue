@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 import {
   MpDrawer,
   MpDrawerContent,
@@ -75,53 +75,53 @@ import {
   MpFlex,
   MpText,
   MpIcon,
-  css,
-} from '@mekari/pixel3'
+  css
+} from "@mekari/pixel3";
 
-defineProps<{ isOpen: boolean }>()
-const emit = defineEmits<{ close: []; select: [value: string] }>()
+defineProps<{ isOpen: boolean }>();
+const emit = defineEmits<{ close: []; select: [value: string] }>();
 
-const selected = ref('')
+const selected = ref("");
 
 const TEMPLATE_OPTIONS = [
   {
-    value: 'campaign-message',
-    label: 'Campaign message',
-    description: 'Fully customizable message to broadcast your marketing messages.',
-    icon: 'broadcast',
+    value: "campaign-message",
+    label: "Campaign message",
+    description: "Fully customizable message to broadcast your marketing messages.",
+    icon: "broadcast"
   },
   {
-    value: 'phone-number-request',
-    label: 'Phone number request',
+    value: "phone-number-request",
+    label: "Phone number request",
     description: "META predefined message to request customer's phone number.",
-    icon: 'mobile',
-  },
-]
+    icon: "mobile"
+  }
+];
 
 function cardClass(value: string) {
-  const isSelected = selected.value === value
+  const isSelected = selected.value === value;
   return css({
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '3',
-    p: '4',
-    borderWidth: '1px',
-    borderRadius: 'md',
-    cursor: 'pointer',
-    transition: 'all 0.15s',
-    borderColor: isSelected ? 'background.brand.bold' : 'border.default',
-    bg: isSelected ? 'background.brand.subtle' : 'background.default',
+    display: "flex",
+    alignItems: "flex-start",
+    gap: "3",
+    p: "4",
+    borderWidth: "1px",
+    borderRadius: "md",
+    cursor: "pointer",
+    transition: "all 0.15s",
+    borderColor: isSelected ? "background.brand.bold" : "border.default",
+    bg: isSelected ? "background.brand.subtle" : "background.default",
     _hover: {
-      bg: isSelected ? 'background.brand.subtle' : 'background.neutral.hovered',
+      bg: isSelected ? "background.brand.subtle" : "background.neutral.hovered"
     },
     _active: {
-      bg: isSelected ? 'background.brand.subtle' : 'background.neutral.pressed',
-    },
-  })
+      bg: isSelected ? "background.brand.subtle" : "background.neutral.pressed"
+    }
+  });
 }
 
 function handleSelect(value: string) {
-  selected.value = value
-  emit('select', value)
+  selected.value = value;
+  emit("select", value);
 }
 </script>

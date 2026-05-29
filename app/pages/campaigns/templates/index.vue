@@ -143,16 +143,15 @@
                 <MpTableHead is-fixed>
                   <MpTableRow>
                     <!-- Fixed left: Template name -->
-                    <MpTableCell
-                      scope="col"
-                      :class="css({ minW: '280px' })"
-                    >
+                    <MpTableCell scope="col" :class="css({ minW: '280px' })">
                       <MpFlex alignItems="center" gap="3">
                         <MpCheckbox
                           id="select-all"
                           :model-value="isAllSelected ? ['all'] : []"
                           value="all"
-                          @update:model-value="(val: string[]) => toggleSelectAll(val.includes('all'))"
+                          @update:model-value="
+                            (val: string[]) => toggleSelectAll(val.includes('all'))
+                          "
                         />
                         Template name
                       </MpFlex>
@@ -181,21 +180,26 @@
                 <!-- ═════ Loading state ═════ -->
                 <MpTableBody v-if="isLoading">
                   <MpTableRow v-for="n in 5" :key="`skeleton-${n}`">
-                    <MpTableCell
-                      as="td"
-                      :class="css({ minW: '280px' })"
-                    >
-                      <div :class="css({ h: '16px', w: '160px', bg: 'background.surface', rounded: 'sm' })" />
+                    <MpTableCell as="td" :class="css({ minW: '280px' })">
+                      <div
+                        :class="
+                          css({ h: '16px', w: '160px', bg: 'background.surface', rounded: 'sm' })
+                        "
+                      />
                     </MpTableCell>
-                    <MpTableCell as="td" v-for="col in 5" :key="`sk-col-${col}`">
-                      <div :class="css({ h: '16px', w: '80px', bg: 'background.surface', rounded: 'sm' })" />
+                    <MpTableCell v-for="col in 5" :key="`sk-col-${col}`" as="td">
+                      <div
+                        :class="
+                          css({ h: '16px', w: '80px', bg: 'background.surface', rounded: 'sm' })
+                        "
+                      />
                     </MpTableCell>
-                    <MpTableCell
-                      as="td"
-                      is-fixed
-                      :class="css({ boxShadow: borderFixedLeft })"
-                    >
-                      <div :class="css({ h: '32px', w: '90px', bg: 'background.surface', rounded: 'md' })" />
+                    <MpTableCell as="td" is-fixed :class="css({ boxShadow: borderFixedLeft })">
+                      <div
+                        :class="
+                          css({ h: '32px', w: '90px', bg: 'background.surface', rounded: 'md' })
+                        "
+                      />
                     </MpTableCell>
                   </MpTableRow>
                 </MpTableBody>
@@ -225,10 +229,7 @@
                 <MpTableBody v-else>
                   <MpTableRow v-for="template in filteredTemplates" :key="template.id">
                     <!-- Template name -->
-                    <MpTableCell
-                      as="td"
-                      :class="css({ minW: '280px' })"
-                    >
+                    <MpTableCell as="td" :class="css({ minW: '280px' })">
                       <MpFlex alignItems="center" gap="3">
                         <MpCheckbox
                           :id="`select-${template.id}`"
@@ -262,11 +263,7 @@
                     <MpTableCell as="td">{{ template.language }}</MpTableCell>
 
                     <!-- Action dropdown (fixed right) -->
-                    <MpTableCell
-                      as="td"
-                      is-fixed
-                      :class="css({ boxShadow: borderFixedLeft })"
-                    >
+                    <MpTableCell as="td" is-fixed :class="css({ boxShadow: borderFixedLeft })">
                       <MpPopover
                         :id="`action-${template.id}`"
                         placement="bottom-end"
@@ -280,8 +277,14 @@
                         </MpPopoverTrigger>
                         <MpPopoverContent>
                           <MpPopoverList>
-                            <MpPopoverListItem @click="handleEdit(template)">View details</MpPopoverListItem>
-                            <MpPopoverListItem :class="css({ color: 'text.danger' })" @click="handleDelete(template)">Delete</MpPopoverListItem>
+                            <MpPopoverListItem @click="handleEdit(template)"
+                              >View details</MpPopoverListItem
+                            >
+                            <MpPopoverListItem
+                              :class="css({ color: 'text.danger' })"
+                              @click="handleDelete(template)"
+                              >Delete</MpPopoverListItem
+                            >
                           </MpPopoverList>
                         </MpPopoverContent>
                       </MpPopover>
@@ -411,7 +414,7 @@ import {
   MpPopoverContent,
   MpPopoverList,
   MpPopoverListItem,
-  css,
+  css
 } from "@mekari/pixel3";
 
 // ─── Copy constants ────────────────────────────────────────────────────────────
@@ -424,8 +427,7 @@ const SECTION_DESCRIPTION =
   "Create template to send campaign and follow up messages to your customers.";
 const PLACEHOLDER_SEARCH = "Search template name";
 const EMPTY_TITLE = "No templates yet";
-const EMPTY_HELPER =
-  "Create your first WhatsApp template to start sending campaigns.";
+const EMPTY_HELPER = "Create your first WhatsApp template to start sending campaigns.";
 const TOTAL_RECORDS = 242;
 
 // ─── Token: sticky-column borders (Pixel 2.4) ────────────────────────────────
@@ -459,16 +461,96 @@ interface Template {
 
 // ─── Sample data ───────────────────────────────────────────────────────────────
 const templates = ref<Template[]>([
-  { id: 1, name: "promo_diskon_september",    type: "Campaign",  category: "Marketing", status: "In-review", quality: "Neutral", language: "BI" },
-  { id: 2, name: "promo_tanggal_kembar",      type: "Campaign",  category: "Marketing", status: "Approved",  quality: "Neutral", language: "BI" },
-  { id: 3, name: "faq_update",                type: "Utility",   category: "Marketing", status: "Rejected",  quality: "Neutral", language: "BI" },
-  { id: 4, name: "payment_reminder",          type: "Follow up", category: "Marketing", status: "Approved",  quality: "High",    language: "EN" },
-  { id: 5, name: "anniversary_discount_promo",type: "Campaign",  category: "Marketing", status: "Disabled",  quality: "Neutral", language: "BI" },
-  { id: 6, name: "flash_sale_campaign",       type: "Campaign",  category: "Marketing", status: "Approved",  quality: "Neutral", language: "BI" },
-  { id: 7, name: "holiday_special_offer",     type: "Follow up", category: "Marketing", status: "Draft",     quality: "Neutral", language: "BI" },
-  { id: 8, name: "customer_survey_incentive", type: "Campaign",  category: "Marketing", status: "Approved",  quality: "Medium",  language: "BI" },
-  { id: 9, name: "birthday_flash_sale",       type: "Utility",   category: "Marketing", status: "Approved",  quality: "Low",     language: "BI" },
-  { id: 10, name: "deleted_item_cart_sale",   type: "Campaign",  category: "Marketing", status: "Approved",  quality: "Neutral", language: "BI" },
+  {
+    id: 1,
+    name: "promo_diskon_september",
+    type: "Campaign",
+    category: "Marketing",
+    status: "In-review",
+    quality: "Neutral",
+    language: "BI"
+  },
+  {
+    id: 2,
+    name: "promo_tanggal_kembar",
+    type: "Campaign",
+    category: "Marketing",
+    status: "Approved",
+    quality: "Neutral",
+    language: "BI"
+  },
+  {
+    id: 3,
+    name: "faq_update",
+    type: "Utility",
+    category: "Marketing",
+    status: "Rejected",
+    quality: "Neutral",
+    language: "BI"
+  },
+  {
+    id: 4,
+    name: "payment_reminder",
+    type: "Follow up",
+    category: "Marketing",
+    status: "Approved",
+    quality: "High",
+    language: "EN"
+  },
+  {
+    id: 5,
+    name: "anniversary_discount_promo",
+    type: "Campaign",
+    category: "Marketing",
+    status: "Disabled",
+    quality: "Neutral",
+    language: "BI"
+  },
+  {
+    id: 6,
+    name: "flash_sale_campaign",
+    type: "Campaign",
+    category: "Marketing",
+    status: "Approved",
+    quality: "Neutral",
+    language: "BI"
+  },
+  {
+    id: 7,
+    name: "holiday_special_offer",
+    type: "Follow up",
+    category: "Marketing",
+    status: "Draft",
+    quality: "Neutral",
+    language: "BI"
+  },
+  {
+    id: 8,
+    name: "customer_survey_incentive",
+    type: "Campaign",
+    category: "Marketing",
+    status: "Approved",
+    quality: "Medium",
+    language: "BI"
+  },
+  {
+    id: 9,
+    name: "birthday_flash_sale",
+    type: "Utility",
+    category: "Marketing",
+    status: "Approved",
+    quality: "Low",
+    language: "BI"
+  },
+  {
+    id: 10,
+    name: "deleted_item_cart_sale",
+    type: "Campaign",
+    category: "Marketing",
+    status: "Approved",
+    quality: "Neutral",
+    language: "BI"
+  }
 ]);
 
 // ─── Derived ───────────────────────────────────────────────────────────────────
@@ -477,16 +559,20 @@ const filteredTemplates = computed(() => {
     const matchSearch = searchQuery.value
       ? t.name.toLowerCase().includes(searchQuery.value.toLowerCase())
       : true;
-    const matchType = filterType.value ? t.type.toLowerCase().replace(" ", "_") === filterType.value : true;
-    const matchCategory = filterCategory.value ? t.category.toLowerCase() === filterCategory.value : true;
-    const matchStatus = filterStatus.value ? t.status.toLowerCase().replace("-", "_") === filterStatus.value : true;
+    const matchType = filterType.value
+      ? t.type.toLowerCase().replace(" ", "_") === filterType.value
+      : true;
+    const matchCategory = filterCategory.value
+      ? t.category.toLowerCase() === filterCategory.value
+      : true;
+    const matchStatus = filterStatus.value
+      ? t.status.toLowerCase().replace("-", "_") === filterStatus.value
+      : true;
     return matchSearch && matchType && matchCategory && matchStatus;
   });
 });
 
-const totalPages = computed(() =>
-  Math.ceil(TOTAL_RECORDS / Number(rowsPerPage.value))
-);
+const totalPages = computed(() => Math.ceil(TOTAL_RECORDS / Number(rowsPerPage.value)));
 
 const paginationRange = computed(() => {
   const per = Number(rowsPerPage.value);
@@ -508,7 +594,7 @@ function statusBadgeType(status: string): BadgeType {
     "In-review": "warning",
     Rejected: "critical",
     Disabled: "announcement",
-    Draft: "information",
+    Draft: "information"
   };
   return map[status] ?? "information";
 }
@@ -518,7 +604,7 @@ function qualityBadgeType(quality: string): BadgeType {
     High: "completed",
     Medium: "warning",
     Low: "critical",
-    Neutral: "announcement",
+    Neutral: "announcement"
   };
   return map[quality] ?? "announcement";
 }
@@ -529,12 +615,12 @@ function toggleSelectAll(value: boolean) {
 }
 
 function handleCreateTemplate() {
-  isDrawerOpen.value = true
+  isDrawerOpen.value = true;
 }
 
 function handleDrawerSelect(_value: string) {
-  isDrawerOpen.value = false
-  navigateTo('/campaigns/templates/create')
+  isDrawerOpen.value = false;
+  navigateTo("/campaigns/templates/create");
 }
 
 function handleEdit(template: Template) {
