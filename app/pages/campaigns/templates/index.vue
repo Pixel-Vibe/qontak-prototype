@@ -429,7 +429,7 @@ const EMPTY_HELPER =
 const TOTAL_RECORDS = 242;
 
 // ─── Token: sticky-column borders (Pixel 2.4) ────────────────────────────────
-const borderFixedRight = "inset -2px 0px var(--mp-colors-border-default)";
+const _borderFixedRight = "inset -2px 0px var(--mp-colors-border-default)";
 const borderFixedLeft = "inset 2px 0px var(--mp-colors-border-default)";
 
 // ─── State ─────────────────────────────────────────────────────────────────────
@@ -542,7 +542,7 @@ function handleEdit(template: Template) {
   console.log("edit", template.name);
 }
 
-function handleDuplicate(template: Template) {
+function _handleDuplicate(template: Template) {
   // TODO: duplicate via API then refresh
   console.log("duplicate", template.name);
 }

@@ -555,6 +555,7 @@ const mediaType = ref('none')
 const previewImageUrl = ref<string | null>(null)
 const saveMediaSample = ref(false)
 const messageBodyHtml = ref('')
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rteEditorInstance = ref<any>(null)
 const variableSamples = reactive<Record<number, string>>({})
 const actionType = ref('')
@@ -636,6 +637,7 @@ function varTag(n: number): string {
   return `{{${n}}}`
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function handleRteChange(content: string, editor: any) {
   messageBodyHtml.value = content
   rteEditorInstance.value = editor
