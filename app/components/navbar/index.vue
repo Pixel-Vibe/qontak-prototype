@@ -42,9 +42,7 @@
     <div data-slot="rightContent" :class="css({ display: 'flex', gap: '2', alignItems: 'center' })">
       <OnlineStatus />
 
-      <Notification>
-        <NotificationContent />
-      </Notification>
+      <NotificationCenter />
 
       <SwitchApp>
         <div>
@@ -129,8 +127,7 @@ import { css } from "@mekari/pixel3";
 import { usePixelLayout } from "~/composables/usePixelLayout";
 import { NAVBAR_HEIGHT } from "~/data/constants";
 import OnlineStatus from "~/components/navbar/OnlineStatus.vue";
-import Notification from "~/components/navbar/Notification.vue";
-import NotificationContent from "~/components/navbar/NotificationContent.vue";
+import NotificationCenter from "~/components/notification/NotificationCenter.vue";
 import SwitchApp from "~/components/navbar/SwitchApp.vue";
 import SwitchAppItem from "~/components/navbar/SwitchAppItem.vue";
 import SwitchAccount from "~/components/navbar/SwitchAccount.vue";
