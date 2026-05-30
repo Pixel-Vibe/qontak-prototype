@@ -30,7 +30,7 @@ import { css, MpFlex, MpText } from "@mekari/pixel3";
 
 const BLANK_IMG = "https://cdn.mekari.design/illustration/blank-slate/NoInbox_PB_M_01.png";
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     showBlankState: boolean;
     variant?: "no-notification" | "all-read" | "not-found";
