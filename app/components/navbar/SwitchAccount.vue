@@ -1,8 +1,16 @@
 <template>
   <MpPopover v-slot="{ onClosePopover }" :isKeepAlive="false">
     <MpPopoverTrigger>
-      <MpButton variant="ghost" size="sm">
-        <MpAvatar :name="accountInformation.fullName" :src="accountInformation.userPhoto" />
+      <MpFlex
+        gap="2"
+        alignItems="center"
+        px="2"
+        py="1"
+        borderRadius="md"
+        cursor="pointer"
+        :_hover="{ bg: 'background.neutral.hovered' }"
+      >
+        <MpAvatar :name="accountInformation.fullName" variant-color="sky" />
 
         <div :class="css({ textAlign: 'left' })">
           <MpText weight="semiBold">
@@ -13,7 +21,7 @@
             {{ accountInformation.companyName }}
           </MpText>
         </div>
-      </MpButton>
+      </MpFlex>
     </MpPopoverTrigger>
 
     <MpPopoverContent :class="css({ width: '65', p: 0 })">
@@ -25,7 +33,7 @@
 <script setup lang="ts">
 import {
   MpAvatar,
-  MpButton,
+  MpFlex,
   MpPopover,
   MpPopoverContent,
   MpPopoverTrigger,

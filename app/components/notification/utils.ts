@@ -68,9 +68,9 @@ const CATEGORY_ICON: Partial<Record<NotificationCategory, string>> = {
   "channel-tokopedia": "Tokopedia",
   "channel-google-business": "Google",
   "channel-email": "email-sent",
-  "channel-blocked-contact": "block",
+  "channel-blocked-contact": "block-user",
   "assignment-task": "task-todo",
-  "download-upload-general": "download",
+  "download-upload-general": "file-transfer",
   "update-general": "settings"
 };
 

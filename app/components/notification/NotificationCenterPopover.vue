@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import {
   css,
   MpAutocomplete,
@@ -315,13 +315,18 @@ onMounted(() => {
 });
 
 // ── Handlers ─────────────────────────────────────────────────────
+const TAB_FILTER_DEFAULTS = [
+  "All general notifications",
+  "All inbox notifications",
+  "All request"
+];
+
+watch(currentTab, (newTab) => {
+  generalFilter.value = TAB_FILTER_DEFAULTS[newTab] ?? TAB_FILTER_DEFAULTS[0];
+});
+
 function handleChangeTab() {
-  const defaults = [
-    "All general notifications",
-    "All inbox notifications",
-    "All request"
-  ];
-  generalFilter.value = defaults[currentTab.value] ?? defaults[0];
+  // intentionally empty — tab filter reset handled by watch(currentTab)
 }
 
 function handleMarkAllAsRead() {

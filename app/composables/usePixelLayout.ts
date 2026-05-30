@@ -11,7 +11,7 @@ interface AccountInformation {
 // Module-level shared state (singleton — works with ssr: false)
 const accountInformation = ref<AccountInformation>({
   userPhoto: "https://i.pravatar.cc/300",
-  fullName: "Rizal Chandra",
+  fullName: "Ahmad Zakiy",
   companyId: "12345678",
   companyName: "PT Mid Solusi Nusantara"
 });

@@ -45,20 +45,18 @@
     </MpFlex>
 
     <!-- Unread dot -->
-    <MpFlex
+    <div
       v-if="!hasRead"
-      position="absolute"
-      top="4"
-      right="3"
+      :class="css({ position: 'absolute', top: '4', right: '3' })"
       @click.stop="markAsRead"
     >
       <MpBadge v-tooltip="'Mark as read'" for="indicator" type="critical" />
-    </MpFlex>
+    </div>
   </MpFlex>
 </template>
 
 <script setup lang="ts">
-import { MpBadge, MpFlex, MpText } from "@mekari/pixel3";
+import { css, MpBadge, MpFlex, MpText } from "@mekari/pixel3";
 import NotificationIcon from "./NotificationIcon.vue";
 import type { NotificationCategory } from "./utils";
 
