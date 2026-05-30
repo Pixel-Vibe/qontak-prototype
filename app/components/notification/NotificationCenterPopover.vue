@@ -315,11 +315,7 @@ onMounted(() => {
 });
 
 // ── Handlers ─────────────────────────────────────────────────────
-const TAB_FILTER_DEFAULTS = [
-  "All general notifications",
-  "All inbox notifications",
-  "All request"
-];
+const TAB_FILTER_DEFAULTS = ["All general notifications", "All inbox notifications", "All request"];
 
 watch(currentTab, (newTab) => {
   generalFilter.value = TAB_FILTER_DEFAULTS[newTab] ?? TAB_FILTER_DEFAULTS[0];

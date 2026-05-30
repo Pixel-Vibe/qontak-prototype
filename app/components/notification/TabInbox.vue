@@ -57,7 +57,11 @@ import NotificationItem from "./NotificationItem.vue";
 import NotificationBlankStates from "./NotificationBlankStates.vue";
 import EndOfTab from "./EndOfTab.vue";
 import { groupNotificationsByDate } from "./utils";
-import { useNotificationTab, type NotificationTabProps, type NotificationTabEmits } from "~/composables/useNotificationTab";
+import {
+  useNotificationTab,
+  type NotificationTabProps,
+  type NotificationTabEmits
+} from "~/composables/useNotificationTab";
 
 const props = defineProps<NotificationTabProps>();
 const emit = defineEmits<NotificationTabEmits>();

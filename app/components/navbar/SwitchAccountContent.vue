@@ -27,9 +27,7 @@
       </MpFlex>
 
       <MpPopoverList>
-        <MpPopoverListItem>
-          Account settings
-        </MpPopoverListItem>
+        <MpPopoverListItem> Account settings </MpPopoverListItem>
         <MpPopoverListItem is-arrow @click="onToggleContent('companyList')">
           Company list
         </MpPopoverListItem>
@@ -95,15 +93,11 @@
           <MpText weight="semiBold">{{ accountInformation.companyName }}</MpText>
           <MpIcon name="check" size="sm" :class="css({ color: 'icon.selected' })" />
         </MpPopoverListItem>
-        <MpPopoverListItem>
-          PT Talenta Digital Indonesia
-        </MpPopoverListItem>
+        <MpPopoverListItem> PT Talenta Digital Indonesia </MpPopoverListItem>
       </MpPopoverList>
 
       <MpFlex px="3" pb="3">
-        <MpButton variant="primary" :class="css({ width: 'full' })">
-          Add new company
-        </MpButton>
+        <MpButton variant="primary" :class="css({ width: 'full' })"> Add new company </MpButton>
       </MpFlex>
     </template>
 
@@ -173,9 +167,7 @@
       </MpPopoverList>
 
       <MpFlex px="3" pb="3">
-        <MpButton variant="primary" :class="css({ width: 'full' })">
-          Add new account
-        </MpButton>
+        <MpButton variant="primary" :class="css({ width: 'full' })"> Add new account </MpButton>
       </MpFlex>
     </template>
 
@@ -206,8 +198,15 @@
           :is-active="currentTheme === 'auto'"
           @click="[setTheme('auto'), onClosePopover?.()]"
         >
-          <MpText :weight="currentTheme === 'auto' ? 'semiBold' : 'regular'">Auto (System settings)</MpText>
-          <MpIcon v-if="currentTheme === 'auto'" name="check" size="sm" :class="css({ color: 'icon.selected' })" />
+          <MpText :weight="currentTheme === 'auto' ? 'semiBold' : 'regular'"
+            >Auto (System settings)</MpText
+          >
+          <MpIcon
+            v-if="currentTheme === 'auto'"
+            name="check"
+            size="sm"
+            :class="css({ color: 'icon.selected' })"
+          />
         </MpPopoverListItem>
 
         <MpPopoverListItem
@@ -215,7 +214,12 @@
           @click="[setTheme('light'), onClosePopover?.()]"
         >
           <MpText :weight="currentTheme === 'light' ? 'semiBold' : 'regular'">Light</MpText>
-          <MpIcon v-if="currentTheme === 'light'" name="check" size="sm" :class="css({ color: 'icon.selected' })" />
+          <MpIcon
+            v-if="currentTheme === 'light'"
+            name="check"
+            size="sm"
+            :class="css({ color: 'icon.selected' })"
+          />
         </MpPopoverListItem>
 
         <MpPopoverListItem
@@ -226,7 +230,12 @@
             <MpText :weight="currentTheme === 'dark' ? 'semiBold' : 'regular'">Dark</MpText>
             <MpBadge for="additionalInformation" type="critical" size="sm">Beta</MpBadge>
           </MpFlex>
-          <MpIcon v-if="currentTheme === 'dark'" name="check" size="sm" :class="css({ color: 'icon.selected' })" />
+          <MpIcon
+            v-if="currentTheme === 'dark'"
+            name="check"
+            size="sm"
+            :class="css({ color: 'icon.selected' })"
+          />
         </MpPopoverListItem>
       </MpPopoverList>
     </template>

@@ -10,19 +10,14 @@
     :style="{ backgroundColor: getNotificationBackground(category) }"
   >
     <!-- Avatar: initials -->
-    <MpText
-      v-if="category === 'avatar'"
-      size="body-small"
-      weight="semiBold"
-      color="text.inverse"
-    >
+    <MpText v-if="category === 'avatar'" size="body-small" weight="semiBold" color="text.inverse">
       {{ getInitialName(name || "") }}
     </MpText>
 
     <!-- All other categories: icon -->
     <MpIcon
       v-else
-      :name="(getNotificationIconName(category) as IconName)"
+      :name="getNotificationIconName(category) as IconName"
       variant="fill"
       size="sm"
       color="icon.inverse"
